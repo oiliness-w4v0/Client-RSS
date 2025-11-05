@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": []
+  },
+  "include": ["src-vue/**.vue", "src-vue/**/*.ts", "src-vue/**/*.tsx", "src-vue/**/*.js", "src-vue/**/*.jsx", "src-vue/**/*.less"]
+}

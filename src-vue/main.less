@@ -1,0 +1,131 @@
+@import url('./assets/index.less');
+
+
+
+:root {
+  color-scheme: light dark;
+  --sidebar-width: 290px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sidebar-background-color: #2b2b2b;
+    --content-background-color: #1e1e1e;
+    --draggable-header-background: #2b2b2b;
+    --icon-hover-background-color: rgba(255, 255, 255, 0.1);
+    --text-title-color: #ffffff;
+    --text-subtitle-color: #cccccc;
+    --text-normal-color: #999999;
+    --menu-hover-background-color: #3a3a3a;
+    --menu-active-background-color: #0052be;
+    --header-border-color: #3a3a3a;
+    --primary-color: #4b4b4b;
+    --divider-color: #444444;
+    // dropdown
+    --dropdown-border-color: #3a3a3a;
+    --dropdown-background-color: #2b2b2b;
+    --dropdown-hover-background-color: #3a3a3a;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --sidebar-background-color: #f0f0f0;
+    --content-background-color: #ffffff;
+    --draggable-header-background: #e0e0e0;
+    --icon-hover-background-color: rgba(0, 0, 0, 0.1);
+    --text-title-color: #000000;
+    --text-subtitle-color: #333333;
+    --text-normal-color: #666666;
+    --menu-hover-background-color: #d2d2d2;
+    --menu-active-background-color: #0052be;
+    --header-border-color: #dcdcdc;
+    --primary-color: #0066ff;
+    --divider-color: #e0e0e0;
+
+    // dropdown
+    --dropdown-background-color: #ffffff;
+    --dropdown-hover-background-color: #f0f0f0;
+  }
+}
+
+
+.rotate {
+  animation: rotate 0.8s ease-in-out infinite;
+}
+
+// 无限旋转动画
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.masker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+  pointer-events: initial;
+
+  &.transparent {
+    background-color: transparent;
+  }
+}
+
+.icons {
+  height: 26px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  cursor: pointer;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+  }
+
+  &:hover {
+    background-color: var(--icon-hover-background-color);
+  }
+}
+
+.menu-item {
+  padding: 6px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  border-radius: 3px;
+  margin-bottom: 4px;
+
+  &:hover {
+    background-color: var(--icon-hover-background-color) !important;
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+
+    &.icon {
+      width: 30px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &.label {
+      flex: 1;
+    }
+  }
+}

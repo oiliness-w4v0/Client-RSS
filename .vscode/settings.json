@@ -1,0 +1,36 @@
+{
+  "editor.guides.bracketPairs": "active",
+  // "editor.lineNumbers": "interval",
+  // "editor.renderWhitespace": "boundary",
+  // "window.autoDetectColorScheme": true,
+  "workbench.editor.tabActionLocation": "right",
+  "workbench.tree.indent": 10,
+  "workbench.tree.expandMode": "singleClick",
+  "workbench.list.smoothScrolling": true,
+  "workbench.productIconTheme": "icons-carbon",
+  "workbench.sideBar.location": "left",
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false
+  },
+  "prettier.enable": false,
+  "prettier.printWidth": 200,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": ".npmrc, drizzle.config.ts, index.html, vite.config.ts, forge.config.ts, package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, bun.lock, .gitignore, tsconfig.json, eslint.config.js",
+    "Cargo.toml": "Cargo.lock"
+  },
+  "cSpell.words": [
+    "asar",
+    "libsql",
+    "signale"
+  ]
+}
