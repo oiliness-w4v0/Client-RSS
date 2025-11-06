@@ -2,7 +2,7 @@ import path from 'node:path'
 import { app, BrowserWindow, shell } from 'electron'
 import started from 'electron-squirrel-startup'
 import cron from 'node-cron'
-import { fatal, success } from 'signale'
+import { fatal } from 'signale'
 import { runMigrations } from './db/db'
 import './handlers'
 
@@ -25,7 +25,7 @@ async function createWindow() {
   // 执行迁移
   await runMigrations()
 
-  if (process.env.ENV === 'production') {
+  if (app.isPackaged) {
     win.loadFile('./dist/index.html').catch(console.error)
   }
   else {
@@ -44,7 +44,7 @@ async function createWindow() {
     // success('running a task every minute')
   })
 
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 }
 
 app.on('ready', createWindow)

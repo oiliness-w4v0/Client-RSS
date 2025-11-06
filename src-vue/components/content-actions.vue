@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DialogEmail from '../components/dialog-email.vue'
+import DialogEmail from './popup/Email.vue'
 </script>
 
 <template>

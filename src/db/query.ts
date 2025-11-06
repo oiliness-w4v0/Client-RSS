@@ -27,6 +27,7 @@ export async function updateUser(id: number, user: Partial<User>): Promise<void>
   await db.update(usersTable).set(user).where(eq(usersTable.id, id))
 }
 
+// addTestUser()
 // 添加测试用户，如果已存在则忽略
 export async function addTestUser(): Promise<void> {
   await db.insert(usersTable).values({
@@ -38,17 +39,20 @@ export async function addTestUser(): Promise<void> {
     target: usersTable.email,
   })
 
-  await db.insert(subscriptions).values({
-    userId: 1,
-    feedId: 3,
-  })
+  // db.insert(subscriptions).values({
+  //   userId: 1,
+  //   feedId: 2,
+  // }).catch(() => {
 
-  await db.insert(subscriptions).values({
-    userId: 1,
-    feedId: 4,
-  })
+  //   db.select().from(subscriptions).then((result) => {
+  //   })
+  // })
 
-  // console.log('Test user added or already exists.')
+  // await db.insert(subscriptions).values({
+  //   userId: 1,
+  //   feedId: 4,
+  // })
+
   // await db.insert(profileInfosTable).values({
   //   bio: 'This is a test user.',
   //   avatarUrl: 'https://example.com/avatar.png',

@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import type { Article, Feed, FeedSelect, FeedWithArticles, ProfileInfo } from '../src/db/schema'
+import type { Article, Feed, FeedSelect, FeedWithArticles } from '../src/db/schema'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import App from './App.vue'

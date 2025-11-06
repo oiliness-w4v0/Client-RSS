@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, markRaw, onMounted, ref } from 'vue'
 import { AiOutlineExperiment, AiOutlineLoading, AiOutlineMoon, AiOutlineOrderedList, AiOutlineRead, AiOutlineSun } from 'vue-icons-plus/ai'
-import FeedPopup from '@/components/dialog-feed.vue'
+import FeedPopup from '@/components/popup/Feed.vue'
 import Popup from '@/components/ui/Popup.vue'
+import { useAppStore } from '@/stores/app'
 import { usePopupStore } from '@/stores/popup'
-import { useAppStore } from '../stores/app'
 
 const popupStore = usePopupStore()
 const appStore = useAppStore()

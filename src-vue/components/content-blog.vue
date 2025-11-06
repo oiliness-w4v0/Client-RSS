@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { computed, onMounted, ref } from 'vue'
-import DialogEmail from '../components/dialog-email.vue'
 import { emitter } from '../emitter'
 import { useAppStore } from '../stores/app'
 import { useImgStore } from '../stores/img'
 import { usePopupStore } from '../stores/popup'
+import DialogEmail from './popup/Email.vue'
 
 const popupStore = usePopupStore()
 const imgStore = useImgStore()
@@ -31,13 +31,10 @@ function scrollEvent(event: Event) {
 }
 
 onMounted(() => {
-  console.log('blogContentRef', blogContentRef.value)
   if (blogContentRef.value) {
     blogContentRef.value.addEventListener('click', (event) => {
-      console.log('点击事件触发')
       const target = event.target as HTMLElement
       if (target.tagName.toLowerCase() === 'img') {
-        console.log('点击了图片', target)
         imgStore.setImg(target as HTMLImageElement)
       }
     })

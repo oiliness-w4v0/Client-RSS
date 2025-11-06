@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "1c9ad66e-1576-4482-a92f-b120805f3fdf",
+  "id": "7ca09c75-6aae-4153-b9ef-715c13677c7a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "articles_table": {
@@ -188,7 +188,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2025-11-06T06:12:45.013Z\"'"
+          "default": "'\"2025-11-06T14:18:56.204Z\"'"
         }
       },
       "indexes": {},
@@ -276,7 +276,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2025-11-06T06:12:45.012Z\"'"
+          "default": "'\"2025-11-06T14:18:56.203Z\"'"
         }
       },
       "indexes": {

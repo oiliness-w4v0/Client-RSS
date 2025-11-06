@@ -2,7 +2,7 @@
 import dayjs from 'dayjs'
 import { computed, ref } from 'vue'
 import { AiOutlineFolder, AiOutlineFolderOpen } from 'vue-icons-plus/ai'
-import FeedPopup from '@/components/dialog-feed.vue'
+import FeedPopup from '@/components/popup/Feed.vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '../stores/app'
 

@@ -92,6 +92,8 @@ ipcMain.handle('get-subscriptions-by-user-id', async (event, userId: number) => 
   }
 })
 
+// 在你发现这个订阅怎么都订阅不上的时候可以看一下你订阅的这个用户存在吗？
+// 如果不存在的话订阅是不会成功的哦~
 // 给用户添加订阅
 ipcMain.handle('add-subscription', async (event, userId: number, feedId: number) => {
   try {

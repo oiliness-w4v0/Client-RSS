@@ -1,6 +1,5 @@
 import type { Article, Feed, FeedWithArticles, ProfileInfo } from '../../src/db/schema'
 import { defineStore } from 'pinia'
-import { emitter } from '../emitter'
 
 interface AppState {
   sidebar: string
@@ -88,20 +87,6 @@ export const useAppStore = defineStore('app', {
     },
     toggleSidebar(view: string) {
       this.sidebar = view
-    },
-    jumpToFeedView() {
-      this.openFeedDialog()
-    },
-    // feed dialog
-    openFeedDialog(cb?: () => void) {
-      this.feedDialogVisible = true
-      if (cb) {
-        emitter.on('close-feed-dialog', cb)
-      }
-    },
-    closeFeedDialog() {
-      this.feedDialogVisible = false
-      emitter.emit('close-feed-dialog')
     },
     // 获取用户信息
     async getProfileInfoByUserId() {

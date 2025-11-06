@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { AiOutlineBug, AiOutlineGitlab, AiOutlineHistory, AiOutlineTwitch } from 'vue-icons-plus/ai'
-import User from '@/components/dialog-user.vue'
+import User from '@/components/popup/User.vue'
 import { usePopupStore } from '@/stores/popup'
 
 const popupStore = usePopupStore()

@@ -33,9 +33,9 @@ export const subscriptions = sqliteTable(
       new Date(),
     ),
   },
-  table => ({
-    pk: primaryKey({ columns: [table.userId, table.feedId] }), // 联合主键
-  }),
+  table => [
+    primaryKey({ columns: [table.userId, table.feedId] }), // 联合主键
+  ],
 )
 
 export const profileInfosTable = sqliteTable('profile_infos_table', {
