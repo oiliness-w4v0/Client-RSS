@@ -30,11 +30,6 @@ function closeIfOverlay(event) {
         <div v-else>
           无效内容
         </div>
-
-        <!-- 关闭按钮 -->
-        <button @click="closePopup">
-          关闭
-        </button>
       </div>
     </div>
   </Transition>

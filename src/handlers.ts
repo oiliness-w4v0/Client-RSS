@@ -1,5 +1,5 @@
 import { ipcMain, nativeTheme, Notification } from 'electron'
-import { addSubscription, getAllArticles, getAllFeeds, getAllFeedsWithArticles, getSubscriptionsByUserId, removeSubscription } from './db/query'
+import { addSubscription, addUser, getAllArticles, getAllFeeds, getAllFeedsWithArticles, getAllUsers, getSubscriptionsByUserId, removeSubscription } from './db/query'
 import { parseRSSFeed } from './lib/rss-parser'
 
 import { sendMail } from './mail'
@@ -110,6 +110,30 @@ ipcMain.handle('remove-subscription', async (event, userId: number, feedId: numb
   try {
     await removeSubscription(userId, feedId)
     return { success: true }
+  }
+  catch (error) {
+    return { success: false, error: (error as Error).message }
+  }
+})
+
+// ========= Users functions ==========
+
+// 获取所有用户
+ipcMain.handle('get-all-users', async () => {
+  try {
+    const data = await getAllUsers()
+    return { success: true, data }
+  }
+  catch (error) {
+    return { success: false, error: (error as Error).message }
+  }
+})
+
+// 新增用户
+ipcMain.handle('add-user', async (event, user) => {
+  try {
+    const data = await addUser(user)
+    return { success: true, data }
   }
   catch (error) {
     return { success: false, error: (error as Error).message }

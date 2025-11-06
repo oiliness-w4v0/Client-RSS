@@ -29,15 +29,6 @@
 - ✅ 所有 Node.js 模块和 API 都可正常使用
 - ✅ Electron 主进程和渲染进程功能完整支持
 
-## 🚀 快速开始
-
-### 安装依赖
-
-```bash
-# 使用 bun 安装依赖
-bun install
-```
-
 ## 📁 项目结构
 
 ```
@@ -50,26 +41,6 @@ electron-forge-template/
 ├── public/          # 静态资源
 ├── forge.config.ts  # Electron Forge 配置
 └── package.json     # 项目配置
-```
-
-## 🔧 环境变量配置
-
-项目使用 `dotenv` 来管理环境变量。在项目根目录创建 `.env` 文件：
-
-```env
-# .env
-NODE_ENV=development
-APP_NAME=MyElectronApp
-# 其他环境变量...
-```
-
-在代码中使用：
-
-```typescript
-import 'dotenv/config'
-
-const appName = process.env.APP_NAME
-const isDev = process.env.NODE_ENV === 'development'
 ```
 
 ## 📝 开发注意事项
@@ -87,14 +58,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 MIT License
 
-## 代办
-
-1. z-index 的定位优先级需要再确认和明确
-2. 邮件发送历史记录功能
-3. 应用日志的记录
-4. 通讯录的优化
-
-## 如何运行
+## 🚀 快速开始
 
 ```sh
 bun install # 安装依赖

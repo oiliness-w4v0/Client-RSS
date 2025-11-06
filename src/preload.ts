@@ -1,3 +1,4 @@
+import type { User } from './db/schema'
 import { contextBridge, ipcRenderer } from 'electron'
 
 export type IpcRendererAPI = typeof api
@@ -14,6 +15,8 @@ const api = {
   getSubscriptionsByUserId: (userId: number) => ipcRenderer.invoke('get-subscriptions-by-user-id', userId),
   addSubscription: (userId: number, feedId: number) => ipcRenderer.invoke('add-subscription', userId, feedId),
   removeSubscription: (userId: number, feedId: number) => ipcRenderer.invoke('remove-subscription', userId, feedId),
+  getAllUsers: () => ipcRenderer.invoke('get-all-users'),
+  addUser: (user: User) => ipcRenderer.invoke('add-user', user),
   onUpdateCounter: (callback: (value: number) => void) => ipcRenderer.on('update-counter', (_event, value) => callback(value)),
 }
 

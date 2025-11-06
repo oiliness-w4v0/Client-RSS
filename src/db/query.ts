@@ -5,6 +5,7 @@ import type {
   FeedSelect,
   FeedWithArticles,
   User,
+  UserSelect,
 } from './schema'
 import { and, eq } from 'drizzle-orm'
 import { db } from './db'
@@ -17,12 +18,24 @@ import {
 
 // ========= Users functions ==========
 
+// 新增用户
+export async function addUser(user: User): Promise<UserSelect[]> {
+  return await db.insert(usersTable).values(user).onConflictDoNothing({
+    target: usersTable.email,
+  }).returning()
+}
+
+// 获取所有用户
+export async function getAllUsers(): Promise<User[]> {
+  return await db.select().from(usersTable)
+}
+
+// 根据ID获取用户
 export async function getUserById(id: number): Promise<any> {
   const users = await db.select().from(usersTable).where(eq(usersTable.id, id))
   return users[0] || null
 }
 
-// update
 export async function updateUser(id: number, user: Partial<User>): Promise<void> {
   await db.update(usersTable).set(user).where(eq(usersTable.id, id))
 }
@@ -32,9 +45,6 @@ export async function updateUser(id: number, user: Partial<User>): Promise<void>
 export async function addTestUser(): Promise<void> {
   await db.insert(usersTable).values({
     email: 'test@example.com',
-    username: 'test-user',
-    nickname: 'Test User',
-    passwordHash: 'hashed_password',
   }).onConflictDoNothing({
     target: usersTable.email,
   })

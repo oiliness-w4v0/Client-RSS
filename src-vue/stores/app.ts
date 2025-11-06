@@ -18,7 +18,7 @@ interface AppState {
 
 export const useAppStore = defineStore('app', {
   state: (): AppState => ({
-    sidebar: 'articleList',
+    sidebar: 'moreSettings',
     feeds: [],
     subscriptions: [],
     feedsWithArticles: [],

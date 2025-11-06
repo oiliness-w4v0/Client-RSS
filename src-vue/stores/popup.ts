@@ -9,7 +9,7 @@ export const usePopupStore = defineStore('popup', () => {
 
   /**
    * 打开弹窗
-   * @param {any} newContent - 弹窗内容
+   * @param {Component | string} newContent - 弹窗内容
    * @param {Function} [callback] - 关闭时的回调（可选）
    */
   const openPopup = (newContent: Component | string, callback?: () => void) => {
