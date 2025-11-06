@@ -2,8 +2,8 @@ name: Build Client RSS
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*' # 例如 v1.0.0
 
 jobs:
   build:
@@ -33,3 +33,9 @@ jobs:
           name: electron-build-${{ matrix.os }} # artifact 名称
           path: out/make/* # 上传 out/make/ 目录下的构建产物（electron-forge 默认输出路径）
 
+      - name: Upload to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/make/**/*
+          generate_release_notes: true
