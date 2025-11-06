@@ -4,6 +4,7 @@
     "": {
       "name": "super-work",
       "dependencies": {
+        "@libsql/client": "^0.15.15",
         "electron-squirrel-startup": "^1.0.1",
       },
       "devDependencies": {
@@ -13,7 +14,6 @@
         "@electron-forge/maker-squirrel": "^7.10.2",
         "@electron-forge/maker-zip": "^7.10.2",
         "@electron-forge/shared-types": "^7.10.2",
-        "@libsql/client": "^0.15.15",
         "@types/better-sqlite3": "^7.6.13",
         "@types/bun": "latest",
         "@types/electron-squirrel-startup": "^1.0.2",

@@ -9,6 +9,10 @@ const config: ForgeConfig = {
     name: '油腻_w4vo',
     asar: true,
     icon: join(resolve(), './public/icon'),
+    appBundleId: 'com.w4vo.app',
+    extraResource: [
+      './migrations',
+    ],
   },
   makers: [
     new MakerSquirrel(

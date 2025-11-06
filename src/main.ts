@@ -3,14 +3,14 @@ import { app, BrowserWindow, shell } from 'electron'
 import started from 'electron-squirrel-startup'
 import cron from 'node-cron'
 import { fatal, success } from 'signale'
-import 'dotenv/config'
+import { runMigrations } from './db/db'
 import './handlers'
 
 if (started) {
   app.quit()
 }
 
-function createWindow() {
+async function createWindow() {
   const win = new BrowserWindow({
     width: 1080,
     height: 850,
@@ -22,7 +22,16 @@ function createWindow() {
     },
   })
 
-  win.loadURL(process.env.VITE_APP_FRONTEND_URL!).catch(fatal)
+  // 执行迁移
+  await runMigrations()
+
+  if (process.env.ENV === 'production') {
+    win.loadFile('./dist/index.html').catch(console.error)
+  }
+  else {
+    win.loadURL(process.env.VITE_APP_FRONTEND_URL!).catch(fatal)
+    win.webContents.openDevTools()
+  }
 
   win.webContents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('https:') || url.startsWith('http:'))

@@ -6,9 +6,16 @@
   "license": "MIT",
   "main": "./dist/main.js",
   "scripts": {
-    "dev": "npm-run-all2 -p start:client start:electron",
-    "start:client": "vite",
-    "start:electron": "bun run ./src/build.ts && electron-forge start",
+    "dev": "npm-run-all2 -p dev:client dev:electron",
+    "dev:client": "vite",
+    "dev:electron": "bun run package-electron-code && bun run start",
+    "build": "npm-run-all2 build:client build:electron",
+    "build:client": "vite build",
+    "build:electron": "bun run package-electron-code && bun run make",
+    "dev2": "bun run ./src/build.ts && electron .",
+    "package-electron-code": "bun run ./src/build.ts",
+    "studio": "npx drizzle-kit studio",
+    "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -19,6 +26,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.15",
     "electron-squirrel-startup": "^1.0.1"
   },
   "devDependencies": {
@@ -28,7 +36,6 @@
     "@electron-forge/maker-squirrel": "^7.10.2",
     "@electron-forge/maker-zip": "^7.10.2",
     "@electron-forge/shared-types": "^7.10.2",
-    "@libsql/client": "^0.15.15",
     "@types/better-sqlite3": "^7.6.13",
     "@types/bun": "latest",
     "@types/electron-squirrel-startup": "^1.0.2",

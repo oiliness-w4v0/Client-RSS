@@ -11,7 +11,6 @@ import { db } from './db'
 import {
   articlesTable,
   feedsTable,
-  profileInfosTable,
   subscriptions,
   usersTable,
 } from './schema'
