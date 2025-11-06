@@ -3,7 +3,7 @@ name: Build Client RSS
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   build:
