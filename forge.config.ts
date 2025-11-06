@@ -29,6 +29,20 @@ const config: ForgeConfig = {
       console.log('Building runtime code with Bun...')
     },
   },
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: '16615812538@163.com',
+          name: 'Client-RSS',
+        },
+        draft: true,
+        prerelease: false,
+        generateReleaseNotes: true,
+      },
+    },
+  ],
 }
 
 export default config

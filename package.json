@@ -26,6 +26,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@electron-forge/publisher-github": "^7.10.2",
     "@libsql/client": "^0.15.15",
     "electron-squirrel-startup": "^1.0.1"
   },
