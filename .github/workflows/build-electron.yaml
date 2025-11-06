@@ -7,13 +7,15 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }} # 使用矩阵策略，支持多平台构建
+
+    strategy:
+      matrix:
+        os: [macos-latest] # 支持 Linux、Windows、macOS
 
     steps:
-      - name: Check out git repository
-        uses: actions/checkout@v3.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v4 # 检出代码
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -22,13 +24,12 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Build the renderer application publish
+      - name: Make Electron app
         run: bun run build
-        env:
-          # 避免 macOS 构建图形问题
-          CI: true
 
-      - name: upload artifacts
-        uses: actions/upload-artifact@v4.0.0
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
         with:
-          path: out/make/*
+          name: electron-build-${{ matrix.os }} # artifact 名称
+          path: out/make/* # 上传 out/make/ 目录下的构建产物（electron-forge 默认输出路径）
+
