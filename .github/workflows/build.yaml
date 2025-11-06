@@ -23,17 +23,9 @@ jobs:
         run: bun install
 
       - name: Build the renderer application publish
-        run: bun run publish
+        run: bun run build
 
       - name: upload artifacts
         uses: actions/upload-artifact@v4.0.0
         with:
           path: out
-
-      - name: release
-        uses: softprops/action-gh-release@v0.1.14
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: 'out/**'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
