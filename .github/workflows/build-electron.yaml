@@ -24,8 +24,18 @@ jobs:
 
       - name: Build the renderer application publish
         run: bun run build
+        env:
+          # 避免 macOS 构建图形问题
+          CI: true
 
       - name: upload artifacts
         uses: actions/upload-artifact@v4.0.0
         with:
-          path: out
+          path: out/**/*
+
+      - name: Publish Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/make/**/*
+          generate_release_notes: true
