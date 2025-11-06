@@ -1,17 +1,24 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { computed, onMounted, ref, useTemplateRef } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import DialogEmail from '../components/dialog-email.vue'
 import { emitter } from '../emitter'
 import { useAppStore } from '../stores/app'
 import { useImgStore } from '../stores/img'
-import ContentActions from './content-actions.vue'
+import { usePopupStore } from '../stores/popup'
 
+const popupStore = usePopupStore()
 const imgStore = useImgStore()
 const appStore = useAppStore()
 const blog = computed(() => {
   return appStore.currentArticle
 })
 const blogContentRef = ref<HTMLDivElement | null>(null)
+
+function openEmailPopup() {
+  popupStore.openPopup(DialogEmail)
+}
+
 function scrollEvent(event: Event) {
   // Placeholder for scroll event handling
   const scrollTop = (event.target as HTMLElement)?.scrollTop || 0
@@ -49,7 +56,9 @@ onMounted(() => {
         {{ dayjs(blog?.publishedAt).format('YYYY-MM-DD HH:mm') }}
       </button>
       <div class="divider" />
-      <ContentActions />
+      <button class="action-button" @click="openEmailPopup()">
+        分享文章
+      </button>
       <div class="divider" />
       <a class="action-button" :href="blog?.url" target="_blank" rel="noopener">
         原文链接

@@ -40,8 +40,8 @@ async function createWindow() {
   })
 
   cron.schedule('*/10 * * * * *', () => {
-    win.webContents.send('update-counter', 1)
-    success('running a task every minute')
+    // win.webContents.send('update-counter', 1)
+    // success('running a task every minute')
   })
 
   win.webContents.openDevTools()

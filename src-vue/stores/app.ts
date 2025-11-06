@@ -1,8 +1,9 @@
 import type { Article, Feed, FeedWithArticles, ProfileInfo } from '../../src/db/schema'
 import { defineStore } from 'pinia'
+import { emitter } from '../emitter'
 
 interface AppState {
-  sidebar: 'default' | 'settings' | 'profile'
+  sidebar: string
   feeds: Feed[]
   subscriptions: number[]
   feedsWithArticles: (FeedWithArticles & { show: false })[]
@@ -18,7 +19,7 @@ interface AppState {
 
 export const useAppStore = defineStore('app', {
   state: (): AppState => ({
-    sidebar: 'default',
+    sidebar: 'articleList',
     feeds: [],
     subscriptions: [],
     feedsWithArticles: [],
@@ -85,21 +86,22 @@ export const useAppStore = defineStore('app', {
     setCurrentArticle(article: Article) {
       this.currentArticle = article
     },
-    toggleSidebar(view: 'default' | 'settings' | 'profile') {
+    toggleSidebar(view: string) {
       this.sidebar = view
     },
     jumpToFeedView() {
-      this.toggleSidebar('settings')
-      setTimeout(() => {
-        this.openFeedDialog()
-      }, 500)
+      this.openFeedDialog()
     },
     // feed dialog
-    openFeedDialog() {
+    openFeedDialog(cb?: () => void) {
       this.feedDialogVisible = true
+      if (cb) {
+        emitter.on('close-feed-dialog', cb)
+      }
     },
     closeFeedDialog() {
       this.feedDialogVisible = false
+      emitter.emit('close-feed-dialog')
     },
     // 获取用户信息
     async getProfileInfoByUserId() {
@@ -110,7 +112,6 @@ export const useAppStore = defineStore('app', {
     },
     listenUpdateCounter() {
       window.ipcRenderer.onUpdateCounter((value: number) => {
-        console.log('Counter updated:', value)
         this.reloadDataVisible = true
         const count = setTimeout(() => {
           this.reloadDataVisible = false

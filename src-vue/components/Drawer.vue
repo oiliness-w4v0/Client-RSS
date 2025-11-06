@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { AiOutlineBug, AiOutlineGitlab, AiOutlineHistory } from 'vue-icons-plus/ai'
-import Feed from '../components/dialog-feed.vue'
-import User from '../components/dialog-user.vue'
+import { AiOutlineBug, AiOutlineGitlab, AiOutlineHistory, AiOutlineTwitch } from 'vue-icons-plus/ai'
+import User from '@/components/dialog-user.vue'
+import { usePopupStore } from '@/stores/popup'
+
+const popupStore = usePopupStore()
+
+function openUserDialog() {
+  popupStore.openPopup(User)
+}
 </script>
 
 <template>
@@ -20,8 +26,12 @@ import User from '../components/dialog-user.vue'
             <span class="label">邮件历史发送 x</span>
           </div>
         </li>
-        <Feed />
-        <User />
+        <li>
+          <div class="menu-item" @click="openUserDialog">
+            <span class="icon"><AiOutlineTwitch :size="15" /></span>
+            <span class="label">关于</span>
+          </div>
+        </li>
         <li>
           <div class="menu-item">
             <span class="icon"><AiOutlineBug :size="15" /></span>

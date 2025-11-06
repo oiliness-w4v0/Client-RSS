@@ -2,7 +2,11 @@
 import dayjs from 'dayjs'
 import { computed, ref } from 'vue'
 import { AiOutlineFolder, AiOutlineFolderOpen } from 'vue-icons-plus/ai'
+import FeedPopup from '@/components/dialog-feed.vue'
+import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '../stores/app'
+
+const popupStore = usePopupStore()
 
 const appStore = useAppStore()
 const opens = ref<number>()
@@ -23,7 +27,7 @@ function openFeed(feedId: number) {
 }
 
 function jumpToFeedView() {
-  appStore.jumpToFeedView()
+  popupStore.openPopup(FeedPopup)
 }
 </script>
 

@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { AiOutlineLoading, AiOutlineMoon, AiOutlineSun } from 'vue-icons-plus/ai'
-import Settings from '../components/dialog-settings.vue'
+import { computed, markRaw, onMounted, ref } from 'vue'
+import { AiOutlineExperiment, AiOutlineLoading, AiOutlineMoon, AiOutlineOrderedList, AiOutlineRead, AiOutlineSun } from 'vue-icons-plus/ai'
+import FeedPopup from '@/components/dialog-feed.vue'
+import Popup from '@/components/ui/Popup.vue'
+import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '../stores/app'
 
+const popupStore = usePopupStore()
 const appStore = useAppStore()
 const isDarkMode = ref(true) // This should be replaced with a method to get the current theme
 
@@ -17,6 +20,61 @@ function toggleTheme() {
   window.ipcRenderer.setNativeTheme(newTheme)
   isDarkMode.value = !isDarkMode.value
 }
+
+const operationButtons = ref([
+  {
+    icon: markRaw(AiOutlineRead),
+    key: 'feed',
+    tooltip: '设置订阅源',
+    click: () => {
+      const pre = appStore.sidebar
+      appStore.toggleSidebar('feed')
+      popupStore.openPopup(FeedPopup, () => {
+        appStore.toggleSidebar(pre)
+      })
+    },
+  },
+  {
+    icon: markRaw(AiOutlineLoading),
+    key: 'reload',
+    tooltip: '重新加载数据',
+    class: {
+      rotate: true,
+    },
+    click: () => {
+      // Trigger data reload
+    },
+  },
+  {
+    icon: computed(() => (isDarkMode.value ? markRaw(AiOutlineSun) : markRaw(AiOutlineMoon))),
+    key: 'SunOrMoon',
+    tooltip: '切换主题',
+    click: () => {
+      toggleTheme()
+    },
+  },
+  {
+    icon: markRaw(AiOutlineOrderedList),
+    key: 'articleList',
+    tooltip: '文章列表',
+    click: () => {
+      appStore.toggleSidebar('articleList')
+    },
+  },
+  {
+    icon: markRaw(AiOutlineExperiment),
+    key: 'moreSettings',
+    tooltip: '更多设置',
+    click: () => {
+      appStore.toggleSidebar('moreSettings')
+    },
+  },
+])
+
+const switchIndex = computed(() => {
+  const keys = operationButtons.value.map(op => op.key)
+  return keys.indexOf(appStore.sidebar)
+})
 </script>
 
 <template>
@@ -27,12 +85,22 @@ function toggleTheme() {
           <AiOutlineLoading :size="16" class="rotate" />
         </div>
       </Transition>
-      <div class="icons" @click="toggleTheme">
-        <AiOutlineSun v-if="isDarkMode" :size="16" />
-        <AiOutlineMoon v-else :size="16" />
-      </div>
-      <Settings />
+      <div
+        class="switch-handle" :style="{
+          left: `${switchIndex * 31}px`,
+        }"
+      />
+
+      <span
+        v-for="operation in operationButtons" :key="operation.key" class="icons" :class="{
+          active: appStore.sidebar === operation.key,
+          ...operation.class,
+        }" @click="operation.click"
+      >
+        <component :is="operation.icon" :size="16" />
+      </span>
     </div>
+    <Popup />
   </div>
 </template>
 
@@ -44,7 +112,7 @@ function toggleTheme() {
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 .header {
@@ -63,6 +131,29 @@ function toggleTheme() {
     gap: 5px;
     app-region: no-drag;
     -moz-app-region: no-drag;
+    position: relative;
+  }
+
+  .icons {
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+
+    &.active {
+      color: white !important;
+    }
+  }
+
+  .switch-handle {
+    width: 26px;
+    height: 26px;
+    background-color: var(--menu-active-background-color);
+    border-radius: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transition: all 0.15s;
   }
 }
 </style>

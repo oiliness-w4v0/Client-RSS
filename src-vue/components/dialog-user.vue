@@ -1,54 +1,38 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import { AiOutlineTwitch } from 'vue-icons-plus/ai'
-import vDialog from './ui/v-dialog.vue'
-
-const loading = ref(false)
-const open = ref(false)
-
-function openDialog() {
-  open.value = true
-}
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <li>
-    <div class="menu-item" @click="openDialog">
-      <span class="icon">
-        <AiOutlineTwitch :size="15" />
-      </span>
-      <span>关于</span>
-    </div>
-
-    <v-dialog v-model:open="open" :width="600" :has-title="false" :loading="loading">
-      <div class="user-space">
-        <div class="avatar">
-          <div class="c1" />
-          <div class="c2" />
-          <div class="c3" />
-          <div class="c4" />
-          <div class="c5" />
-          <img src="https://avatars.githubusercontent.com/u/1" alt="">
-        </div>
-        <div class="user-list">
-          <div>
-            <div class="item">
-              @ 油腻_w4v0 ~
-            </div>
-            <div class="item">
-              18267094443@163.com
-            </div>
-            <div class="item">
-              只有懦弱和失败者才会四处寻找借口。
-            </div>
+  <div class="user-popup">
+    <div class="user-space">
+      <div class="avatar">
+        <div class="c1" />
+        <div class="c2" />
+        <div class="c3" />
+        <div class="c4" />
+        <div class="c5" />
+        <img src="https://avatars.githubusercontent.com/u/1" alt="">
+      </div>
+      <div class="user-list">
+        <div>
+          <div class="item">
+            @ 油腻_w4v0 ~
+          </div>
+          <div class="item">
+            18267094443@163.com
+          </div>
+          <div class="item">
+            只有懦弱和失败者才会四处寻找借口。
           </div>
         </div>
       </div>
-    </v-dialog>
-  </li>
+    </div>
+  </div>
 </template>
 
 <style lang="less" scoped>
+.user-popup {
+  width: 560px;
+}
+
 .user-space {
   display: flex;
   gap: 54px;

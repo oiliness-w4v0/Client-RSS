@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { AiOutlineRedo, AiOutlineShareAlt } from 'vue-icons-plus/ai'
-import vDialog from './ui/v-dialog.vue'
+import { AiOutlineRedo } from 'vue-icons-plus/ai'
 
 const loading = ref(false)
-
-const open = ref(false)
-
-function openDialog() {
-  open.value = true
-}
 
 const tos = ref<string[]>([])
 
@@ -51,30 +44,25 @@ const emails = computed(() => {
 </script>
 
 <template>
-  <div>
-    <button class="share" @click="openDialog">
-      <AiOutlineShareAlt :size="15" />分享给朋友
-    </button>
-    <v-dialog v-model:open="open" title="分享文章">
-      <p>请选择需要分享的朋友，我们会将文章转载给他们。</p>
-      <div class="users">
-        <button
-          v-for="user in userList" :key="user.id" :class="{
-            active: tos.includes(user.id),
-          }" class="action-button" @click="addUser(user.id)"
-        >
-          <div class="user-icon">
-            <img :src="user.img" alt="img">
-          </div>
-          {{ user.email }}
-        </button>
-      </div>
-      <input v-model="emails" type="text" placeholder="或输入邮箱，用逗号分隔">
-      <button class="send-email" @click="sendEmail">
-        <AiOutlineRedo v-if="loading" :size="15" class="rotate" />
-        发送
+  <div class="email-popup">
+    <p>请选择需要分享的朋友，我们会将文章转载给他们。</p>
+    <div class="users">
+      <button
+        v-for="user in userList" :key="user.id" :class="{
+          active: tos.includes(user.id),
+        }" class="action-button" @click="addUser(user.id)"
+      >
+        <div class="user-icon">
+          <img :src="user.img" alt="img">
+        </div>
+        {{ user.email }}
       </button>
-    </v-dialog>
+    </div>
+    <input v-model="emails" type="text" placeholder="或输入邮箱，用逗号分隔">
+    <button class="send-email" @click="sendEmail">
+      <AiOutlineRedo v-if="loading" :size="15" class="rotate" />
+      发送
+    </button>
   </div>
 </template>
 

@@ -7,30 +7,7 @@ const appStore = useAppStore()
 
 <template>
   <div class="dialog-settings">
-    <div
-      class="mask" :class="{
-        pos1: appStore.sidebar === 'default',
-        pos2: appStore.sidebar === 'settings',
-      }"
-    />
-    <div
-      class="icons"
-      :class="{
-        active: appStore.sidebar === 'default',
-      }"
-      @click="appStore.toggleSidebar('default')"
-    >
-      <AiOutlineOrderedList :size="16" />
-    </div>
-    <div
-      class="icons"
-      :class="{
-        active: appStore.sidebar === 'settings',
-      }"
-      @click="appStore.toggleSidebar('settings')"
-    >
-      <AiOutlineExperiment :size="16" />
-    </div>
+    
   </div>
 </template>
 

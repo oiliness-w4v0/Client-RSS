@@ -8,7 +8,7 @@
   "workbench.tree.expandMode": "singleClick",
   "workbench.list.smoothScrolling": true,
   "workbench.productIconTheme": "icons-carbon",
-  "workbench.sideBar.location": "left",
+  "workbench.sideBar.location": "right",
   "github.copilot.enable": {
     "*": true,
     "markdown": true,

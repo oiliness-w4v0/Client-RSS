@@ -11,11 +11,11 @@ import { useAppStore } from './stores/app'
 const appStore = useAppStore()
 
 const Sidebar = computed(() => {
-  if (appStore.sidebar === 'default') {
+  if (appStore.sidebar === 'articleList') {
     return SidebarMenu
   }
 
-  if (appStore.sidebar === 'settings') {
+  if (appStore.sidebar === 'moreSettings') {
     return Drawer
   }
 
@@ -78,7 +78,7 @@ onMounted(() => {
 
 .slide-fade-enter-from {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(-100%);
 }
 
 .slide-fade-leave-to {

@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { ref } from 'vue'
-import { AiOutlineRedo } from 'vue-icons-plus/ai'
+import { AiOutlineRead, AiOutlineRedo } from 'vue-icons-plus/ai'
 import { useAppStore } from '../stores/app'
+import vDialog from './ui/v-dialog.vue'
 
 const rssUrl = ref('https://www.ruanyifeng.com/blog/atom.xml')
 const loading = ref(false)
 const appStore = useAppStore()
+
+function openDialog() {
+  appStore.openFeedDialog()
+}
 
 function addRss() {
   if (loading.value)
@@ -34,11 +39,7 @@ function selectChange(e: Event) {
 </script>
 
 <template>
-  <div class="feed-popup">
-    <h2>
-      {{ '弹窗' }}
-    </h2>
-
+  <v-dialog v-model:open="appStore.feedDialogVisible" :width="600" :has-title="false" :loading="loading">
     <div class="flex">
       <input v-model="rssUrl" type="text" class="flex-1" placeholder="搜索订阅源">
       <div class="button flex-0" @click="addRss">
@@ -70,15 +71,10 @@ function selectChange(e: Event) {
         </label>
       </li>
     </ul>
-  </div>
+  </v-dialog>
 </template>
 
 <style lang="less" scoped>
-.feed-popup {
-  width: 560px;
-  box-sizing: border-box;
-}
-
 .divider {
   height: 1px;
   background-color: var(--divider-color);
