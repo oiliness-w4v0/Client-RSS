@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { ArticleSelect } from '../../src/db/schema'
 import dayjs from 'dayjs'
-import { computed, ref } from 'vue'
-import { AiOutlineFolder, AiOutlineFolderOpen } from 'vue-icons-plus/ai'
+import { computed } from 'vue'
+import {
+  AiOutlineFolder,
+  AiOutlineFolderOpen,
+} from 'vue-icons-plus/ai'
 import FeedPopup from '@/components/popup/Feed.vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '../stores/app'

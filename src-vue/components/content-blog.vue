@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { computed, onMounted, ref } from 'vue'
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue'
 import { useCacheStore } from '@/stores/cache'
-import { emitter } from '../emitter'
 import { useAppStore } from '../stores/app'
 import { useImgStore } from '../stores/img'
 import { usePopupStore } from '../stores/popup'
@@ -20,6 +23,8 @@ const blog = computed(() => {
 })
 const blogContentRef = ref<HTMLDivElement | null>(null)
 
+const isTitleVisible = ref(false)
+
 function openEmailPopup() {
   popupStore.openPopup(DialogEmail)
 }
@@ -28,10 +33,10 @@ function scrollEvent(event: Event) {
   // Placeholder for scroll event handling
   const scrollTop = (event.target as HTMLElement)?.scrollTop || 0
   if (scrollTop < 100) {
-    emitter.emit('scroll-to-current-position', false)
+    isTitleVisible.value = false
   }
   else {
-    emitter.emit('scroll-to-current-position', true)
+    isTitleVisible.value = true
   }
 }
 
@@ -48,6 +53,18 @@ onMounted(() => {
 </script>
 
 <template>
+  <div
+    class="header" :class="{
+      active: isTitleVisible,
+    }"
+  >
+    <transition name="fade">
+      <div v-show="isTitleVisible">
+        {{ blog?.title }}
+      </div>
+    </transition>
+  </div>
+
   <div class="blog" @scroll="scrollEvent">
     <div v-if="!blog" class="page-404">
       请选择你想阅读的文章
@@ -71,6 +88,27 @@ onMounted(() => {
 </template>
 
 <style lang="less">
+.header {
+  min-height: 50px;
+  app-region: drag;
+  -moz-app-region: drag;
+  padding-left: 20px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  &.active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+
+  &>div {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-title-color);
+    line-height: 40px;
+  }
+}
+
 .blog {
   height: 100%;
   overflow-y: auto;
@@ -130,5 +168,15 @@ onMounted(() => {
       word-wrap: break-word;
     }
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

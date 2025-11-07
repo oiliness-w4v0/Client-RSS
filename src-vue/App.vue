@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
-import { computed, onMounted } from 'vue'
+import {
+  computed,
+  onMounted,
+} from 'vue'
 import ContentBlog from './components/content-blog.vue'
-import ContentHeader from './components/content-header.vue'
 import Drawer from './components/Drawer.vue'
 import ImageShow from './components/ImageShow.vue'
 import SidebarActions from './components/sidebar-actions.vue'
@@ -40,7 +42,6 @@ onMounted(() => {
       </Transition>
     </div>
     <div class="content">
-      <ContentHeader />
       <ContentBlog />
     </div>
   </div>
@@ -70,20 +71,16 @@ onMounted(() => {
     overflow-x: hidden;
   }
 }
-
 .slide-fade-enter-active {
   transition: all 0.15s ease-out;
 }
-
 .slide-fade-leave-active {
   transition: all 0.15s ease-in;
 }
-
 .slide-fade-enter-from {
     opacity: 0;
     transform: translateX(-100%);
 }
-
 .slide-fade-leave-to {
     opacity: 0;
     transform: translateX(-100%);
