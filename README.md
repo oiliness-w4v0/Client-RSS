@@ -32,7 +32,6 @@
 
 虽然我们使用 Bun 进行代码构建，但应用程序最终仍在 **Electron 的 Node.js 环境**中运行。因此：
 
-- ✅ 使用 **dotenv** 管理环境变量（兼容 Node.js 环境）
 - ✅ 所有 Node.js 模块和 API 都可正常使用
 - ✅ Electron 主进程和渲染进程功能完整支持
 
@@ -54,7 +53,6 @@ electron-forge-template/
 
 1. **构建工具**: 使用 Bun 构建，享受快速编译体验
 2. **运行环境**: 应用在 Electron 的 Node.js 环境中执行
-3. **环境变量**: 使用 dotenv 确保与 Node.js 运行时的兼容性
 4. **平台支持**: 当前配置仅支持 macOS 平台
 
 ## 🤝 贡献指南

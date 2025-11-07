@@ -1,6 +1,18 @@
 <script setup lang="ts">
-import { computed, markRaw, onMounted, ref } from 'vue'
-import { AiOutlineExperiment, AiOutlineLoading, AiOutlineMoon, AiOutlineOrderedList, AiOutlineRead, AiOutlineSun } from 'vue-icons-plus/ai'
+import {
+  computed,
+  markRaw,
+  onMounted,
+  ref,
+} from 'vue'
+import {
+  AiOutlineExperiment,
+  AiOutlineLoading,
+  AiOutlineMoon,
+  AiOutlineOrderedList,
+  AiOutlineRead,
+  AiOutlineSun,
+} from 'vue-icons-plus/ai'
 import FeedPopup from '@/components/popup/Feed.vue'
 import Popup from '@/components/ui/Popup.vue'
 import { useAppStore } from '@/stores/app'
@@ -40,9 +52,7 @@ const operationButtons = ref([
     icon: markRaw(AiOutlineLoading),
     key: 'reload',
     tooltip: '重新加载数据',
-    class: {
-      rotate: true,
-    },
+    class: { rotate: true },
     click: () => {
       // Trigger data reload
     },
@@ -88,9 +98,7 @@ const switchIndex = computed(() => {
         </div>
       </Transition>
       <div
-        class="switch-handle" :style="{
-          left: `${switchIndex * 31}px`,
-        }"
+        class="switch-handle" :style="{ left: `${switchIndex * 31}px` }"
       />
 
       <span
