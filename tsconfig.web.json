@@ -10,7 +10,7 @@
     "types": [],
     "outDir": "./dist/client"
   },
-  "include": ["src-vue/**/*"]
+  "include": ["src-vue/**/*", "src/lib/constant.ts", "src/db/schema.ts"]
 }
 // {
 //   "extends": "./tsconfig.json",

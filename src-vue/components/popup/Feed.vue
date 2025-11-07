@@ -8,18 +8,14 @@ const rssUrl = ref('https://www.ruanyifeng.com/blog/atom.xml')
 const loading = ref(false)
 const appStore = useAppStore()
 
-function addRss() {
+async function addRss() {
   if (loading.value)
     return
   loading.value = true
 
-  appStore.subscribeRSS(rssUrl.value).then((res) => {
-    if (res.success) {
-      appStore.getAllFeedsWithArticles()
-    }
-  }).finally(() => {
-    loading.value = false
-  })
+  await appStore.subscribeRSS(rssUrl.value)
+  await appStore.getAllFeedsWithArticles()
+  loading.value = false
 }
 
 function selectChange(e: Event) {

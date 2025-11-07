@@ -132,14 +132,15 @@ const switchIndex = computed(() => {
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
-  app-region: drag;
+
+  -webkit-app-region: drag;
   -moz-app-region: drag;
 
   .actions {
     display: flex;
     align-items: center;
     gap: 5px;
-    app-region: no-drag;
+    -webkit-app-region: no-drag;
     -moz-app-region: no-drag;
     position: relative;
   }

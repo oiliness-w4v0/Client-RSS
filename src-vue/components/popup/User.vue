@@ -1,6 +1,15 @@
 <script setup lang="ts">
-import type { User, UserSelect, UserWithFeeds, UserWithProfileInfo } from '../../../src/db/schema'
-import { computed, onMounted, ref } from 'vue'
+import type {
+  User,
+  UserSelect,
+  UserWithFeeds,
+  UserWithProfileInfo,
+} from '../../../src/db/schema'
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue'
 import { AiOutlineLoading } from 'vue-icons-plus/ai'
 import { useUserStore } from '@/stores/user'
 
@@ -15,9 +24,7 @@ function login() {
     return
   }
   // 登录逻辑
-  userStore.addUser({
-    email: email.value,
-  }).then(() => {
+  userStore.addUser(email.value).then(() => {
     status.value = 'status-2'
     email.value = ''
   })

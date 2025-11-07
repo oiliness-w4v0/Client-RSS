@@ -8,7 +8,12 @@ import started from 'electron-squirrel-startup'
 import cron from 'node-cron'
 import { fatal } from 'signale'
 import { runMigrations } from './db/db'
-import './handlers'
+
+import { addUser } from './module/user'
+import './module/feed'
+import './module/article'
+import './module/common'
+import './module/subscription'
 
 if (started) {
   app.quit()
@@ -25,9 +30,10 @@ async function createWindow() {
       contextIsolation: true,
     },
   })
-
   // 执行迁移
   await runMigrations()
+  // 初始化默认用户
+  await addUser('18267094443@163.com')
 
   if (app.isPackaged) {
     win.loadFile('./dist/index.html').catch(console.error)

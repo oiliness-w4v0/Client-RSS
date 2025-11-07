@@ -1,11 +1,8 @@
-import type {
-  User,
-  UserSelect,
-  UserWithProfileInfo,
-} from '../../src/db/schema'
+import type { UserSelect } from '../../src/db/schema'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useCacheStore } from '@/stores/cache'
+import { RUN } from '~/lib/constant'
 
 export const useUserStore = defineStore('user', () => {
   const users = ref<UserSelect[]>([])
@@ -13,19 +10,13 @@ export const useUserStore = defineStore('user', () => {
 
   /**
    * 添加用户
-   * @param {UserSelect} user - 用户对象
+   * @param {string} email - 用户对象
    * @returns {void}
    */
-  async function addUser(user: User): Promise<void> {
-    return ipcRenderer.invoke('add-user', user).then((response) => {
-      if (response.success) {
-        // 添加成功后可以选择刷新用户列表
-        getUsers()
-      }
-      else {
-        console.error('Failed to add user:', response.error)
-      }
-    })
+  async function addUser(email: string): Promise<void> {
+    await ipcRenderer.invoke(RUN.ADD_USER, email)
+    // 添加成功后可以选择刷新用户列表
+    getUsers()
   }
 
   /**
@@ -33,14 +24,10 @@ export const useUserStore = defineStore('user', () => {
    * @returns {void}
    */
   async function getUsers(init?: boolean): Promise<void> {
-    const {
-      success,
-      data,
-    } = await ipcRenderer.invoke('get-all-users')
+    const data = await ipcRenderer.invoke(RUN.GET_ALL_USERS)
     const cacheStore = useCacheStore()
-    if (success && data) {
+    if (data) {
       users.value = data
-
       const user = data[0]
       if (user) {
         setCurrentUser(user)
@@ -56,14 +43,12 @@ export const useUserStore = defineStore('user', () => {
    * @param {UserSelect} selectedUser - 选择的用户对象
    * @returns {void}
    */
-  function setCurrentUser(selectedUser: UserWithProfileInfo): void {
+  function setCurrentUser(selectedUser: UserSelect): void {
     user.value = selectedUser
-    if (selectedUser.profileInfo) {
-      const cacheStore = useCacheStore()
-      cacheStore.setSidebar(selectedUser.profileInfo.sidebar)
-      cacheStore.setFeedId(selectedUser.profileInfo.feedId)
-      cacheStore.setArticleId(selectedUser.profileInfo.articleId)
-    }
+    const cacheStore = useCacheStore()
+    cacheStore.setSidebar(selectedUser.sidebar)
+    cacheStore.setFeedId(selectedUser.feedId)
+    cacheStore.setArticleId(selectedUser.articleId)
   }
 
   return {

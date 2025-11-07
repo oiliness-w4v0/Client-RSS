@@ -7,5 +7,4 @@ declare module '*.vue' {
   export default component
 }
 
-// 全局 ipcRenderer
 declare const ipcRenderer: import('electron').IpcRenderer

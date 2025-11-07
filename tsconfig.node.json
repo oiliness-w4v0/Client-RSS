@@ -6,7 +6,7 @@
     "lib": ["ES2020"],
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "types": ["node"],
+    "types": ["node", "@types/bun"],
     "outDir": "./dist/server"
   },
   "include": ["src/**/*"]

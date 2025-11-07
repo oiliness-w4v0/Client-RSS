@@ -6,6 +6,7 @@ import {
   watch,
 } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { RUN } from '~/lib/constant'
 
 interface CacheState {
   sidebar: string
@@ -38,7 +39,7 @@ export const useCacheStore = defineStore('app-cache', () => {
     (newVal) => {
       const userStore = useUserStore()
       if (userStore.user) {
-        ipcRenderer.invoke('update-profile-info-by-user-id', userStore.user.id!, toRaw(newVal))
+        ipcRenderer.invoke(RUN.UPDATE_USER_BY_ID, userStore.user.id!, toRaw(newVal))
       }
     },
   )
