@@ -1,11 +1,26 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"],
-    "paths": {
-      "@/*": ["./src-vue/*"]
-    },
-    "types": []
+    "composite": true,
+    "target": "ES2015",
+    "jsx": "preserve",
+    "lib": ["DOM", "ES2020"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": [],
+    "outDir": "./dist/client"
   },
-  "include": ["src-vue/**.vue", "src-vue/**/*.ts", "src-vue/**/*.tsx", "src-vue/**/*.js", "src-vue/**/*.jsx", "src-vue/**/*.less"]
+  "include": ["src-vue/**/*"]
 }
+// {
+//   "extends": "./tsconfig.json",
+//   "compilerOptions": {
+//     "composite": true,
+//     "lib": ["ESNext", "DOM"],
+//     "paths": {
+//       "@/*": ["./src-vue/*"]
+//     },
+//     "types": []
+//   },
+//   "include": ["src-vue/**.d.ts", "src-vue/**.vue", "src-vue/**/*.ts", "src-vue/**/*.tsx", "src-vue/**/*.js", "src-vue/**/*.jsx", "src-vue/**/*.less"]
+// }

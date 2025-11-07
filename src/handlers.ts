@@ -1,6 +1,19 @@
 import type { ProfileInfo } from './db/schema'
-import { ipcMain, nativeTheme, Notification } from 'electron'
-import { addSubscription, addUser, getAllArticles, getAllFeeds, getAllFeedsWithArticles, getAllUsers, getSubscriptionsByUserId, removeSubscription } from './db/query'
+import {
+  ipcMain,
+  nativeTheme,
+  Notification,
+} from 'electron'
+import {
+  addSubscription,
+  addUser,
+  getAllArticles,
+  getAllFeeds,
+  getAllFeedsWithArticles,
+  getAllUsers,
+  getSubscriptionsByUserId,
+  removeSubscription,
+} from './db/query'
 
 import { updateProfileInfoByUserId } from './db/query/profileInfo'
 import { parseRSSFeed } from './lib/rss-parser'
@@ -24,7 +37,10 @@ const NOTIFICATION_BODY
   = '发送给 18267094443@163.com 的邮件发送失败！请检查网络或邮箱地址是否正确。'
 
 function showNotification() {
-  new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
+  new Notification({
+    title: NOTIFICATION_TITLE,
+    body: NOTIFICATION_BODY,
+  }).show()
 }
 
 // 发送邮件
@@ -35,7 +51,10 @@ ipcMain.handle('send-mail', async (event, to: string, html: string) => {
   }
   catch (error) {
     showNotification()
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -46,7 +65,10 @@ ipcMain.handle('subscribe-rss', async (event, url: string) => {
     return { success: true }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -54,10 +76,16 @@ ipcMain.handle('subscribe-rss', async (event, url: string) => {
 ipcMain.handle('get-all-feeds', async () => {
   try {
     const data = await getAllFeeds()
-    return { success: true, data }
+    return {
+      success: true,
+      data,
+    }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -65,10 +93,16 @@ ipcMain.handle('get-all-feeds', async () => {
 ipcMain.handle('get-all-feeds-with-articles', async () => {
   try {
     const data = await getAllFeedsWithArticles()
-    return { success: true, data }
+    return {
+      success: true,
+      data,
+    }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -76,10 +110,16 @@ ipcMain.handle('get-all-feeds-with-articles', async () => {
 ipcMain.handle('get-all-articles', async () => {
   try {
     const data = await getAllArticles()
-    return { success: true, data }
+    return {
+      success: true,
+      data,
+    }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -87,10 +127,16 @@ ipcMain.handle('get-all-articles', async () => {
 ipcMain.handle('get-subscriptions-by-user-id', async (event, userId: number) => {
   try {
     const data = await getSubscriptionsByUserId(userId)
-    return { success: true, data }
+    return {
+      success: true,
+      data,
+    }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -103,7 +149,10 @@ ipcMain.handle('add-subscription', async (event, userId: number, feedId: number)
     return { success: true }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -114,7 +163,10 @@ ipcMain.handle('remove-subscription', async (event, userId: number, feedId: numb
     return { success: true }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -124,10 +176,16 @@ ipcMain.handle('remove-subscription', async (event, userId: number, feedId: numb
 ipcMain.handle('get-all-users', async () => {
   try {
     const data = await getAllUsers()
-    return { success: true, data }
+    return {
+      success: true,
+      data,
+    }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
@@ -135,20 +193,38 @@ ipcMain.handle('get-all-users', async () => {
 ipcMain.handle('add-user', async (event, user) => {
   try {
     const data = await addUser(user)
-    return { success: true, data }
+    return {
+      success: true,
+      data,
+    }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
 
 // 更新用户的 ProfileInfo 信息
-ipcMain.handle('update-user-profile', async (event, userId: number, profile: Partial<ProfileInfo>) => {
+ipcMain.handle('update-profile-info-by-user-id', async (event, userId: number, profile: Partial<ProfileInfo>) => {
   try {
     const data = await updateProfileInfoByUserId(userId, profile)
-    return { success: true, data }
+    return {
+      success: true,
+      data,
+    }
   }
   catch (error) {
-    return { success: false, error: (error as Error).message }
+    return {
+      success: false,
+      error: (error as Error).message,
+    }
   }
 })
+
+// ===================================
+ipcMain.handle('onUpdateCounter', () => {})
+ipcMain.handle('getNativeTheme', () => {})
+ipcMain.handle('getAllFeedsWithArticles', () => {})
+ipcMain.handle('getSubscriptionsByUserId', () => {})

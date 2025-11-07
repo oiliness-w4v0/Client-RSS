@@ -1,6 +1,10 @@
 // 应用缓存
 import { defineStore } from 'pinia'
-import { reactive, toRaw, watch } from 'vue'
+import {
+  reactive,
+  toRaw,
+  watch,
+} from 'vue'
 import { useUserStore } from '@/stores/user'
 
 interface CacheState {
@@ -34,15 +38,14 @@ export const useCacheStore = defineStore('app-cache', () => {
     (newVal) => {
       const userStore = useUserStore()
       if (userStore.user) {
-        console.log('缓存变化，更新用户的 profileInfo', newVal)
-        window.ipcRenderer.updateProfileInfoByUserId(userStore.user.id!, toRaw(newVal))
+        ipcRenderer.invoke('update-profile-info-by-user-id', userStore.user.id!, toRaw(newVal))
       }
     },
   )
 
   // 更新缓存
   function updateCache() {
-    // window.ipcRenderer.onUpdateCounter
+
   }
 
   return {

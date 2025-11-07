@@ -23,7 +23,10 @@ function addRss() {
 }
 
 function selectChange(e: Event) {
-  const { value, checked } = e.target as HTMLInputElement
+  const {
+    value,
+    checked,
+  } = e.target as HTMLInputElement
   if (checked) {
     appStore.addSubscription(1, Number(value))
   }

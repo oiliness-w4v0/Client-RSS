@@ -1,5 +1,9 @@
 import path from 'node:path'
-import { app, BrowserWindow, shell } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  shell,
+} from 'electron'
 import started from 'electron-squirrel-startup'
 import cron from 'node-cron'
 import { fatal } from 'signale'

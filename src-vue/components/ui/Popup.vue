@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { usePopupStore } from '@/stores/popup' // 调整路径
 
@@ -10,12 +10,6 @@ const isComponent = computed(() => typeof content.value === 'object' && content.
 
 function closePopup() {
   store.closePopup()
-}
-
-function closeIfOverlay(event) {
-  if (event.target === event.currentTarget) {
-    closePopup() // 点击遮罩关闭
-  }
 }
 </script>
 
@@ -69,8 +63,6 @@ function closeIfOverlay(event) {
   transition: all 0.15s ease-out;
 }
 .slide-fade-leave-active {
-  /* transition: opacity 0.13s cubic-bezier(1, 0.5, 0.8, 1);
-  transition: transform 0.35s cubic-bezier(1, 0.5, 0.8, 1); */
   transition: all 0s;
 }
 .slide-fade-enter-from,

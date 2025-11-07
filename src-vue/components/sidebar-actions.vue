@@ -25,13 +25,13 @@ const cacheStore = useCacheStore()
 const isDarkMode = ref(true) // This should be replaced with a method to get the current theme
 
 onMounted(async () => {
-  const theme = await window.ipcRenderer.getNativeTheme()
+  const theme = await ipcRenderer.invoke('get-native-theme')
   isDarkMode.value = theme === 'dark'
 })
 
 function toggleTheme() {
   const newTheme = isDarkMode.value ? 'light' : 'dark'
-  window.ipcRenderer.setNativeTheme(newTheme)
+  ipcRenderer.invoke('set-native-theme', newTheme)
   isDarkMode.value = !isDarkMode.value
 }
 
