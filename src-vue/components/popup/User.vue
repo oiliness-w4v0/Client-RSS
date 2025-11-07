@@ -60,6 +60,9 @@ const statusIndex = computed(() => {
 })
 
 onMounted(() => {
+  if (userStore.user) {
+    status.value = 'status-2'
+  }
   // userStore.getUsers().then(() => {
   // if (userStore.user) {
   //   status.value = 'status-2'
@@ -77,30 +80,37 @@ onMounted(() => {
         }"
       >
         <div class="user-space switch-slide-1">
-          <div class="switch-main">
-            <div class="mb-8">
-              <input v-model="email" type="email" placeholder="请输入邮箱...">
+          <div>
+            <label for="inputname" class="block text-gray-800 font-semibold text-sm">邮箱</label>
+            <div class="mt-2">
+              <input
+                v-model="email"
+                type="email"
+                class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-red-500 invalid:text-red-600
+      focus:invalid:border-red-500 focus:invalid:ring-red-500
+    "
+              >
             </div>
-            <div>
-              <button class="button w-full" @click="login">
-                登录
+            <label class="pt-1 block text-gray-500 text-sm">有效邮箱地址</label>
+            <div class="block mt-2">
+              <button class="block cursor-pointer w-96 rounded-md border-transparent bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-600 mt-6" type="submit" @click="login">
+                注册/登录
               </button>
             </div>
           </div>
         </div>
         <div class="user-space switch-slide-2">
-          <div class="avatar">
+          <div class="avatar flex flex-col items-center justify-center">
             <div v-if="loading" class="loading">
               <AiOutlineLoading :size="16" class="rotate" />
             </div>
-            <div class="c1" />
-            <div class="c2" />
-            <div class="c3" />
-            <div class="c4" />
-            <div class="c5" />
+
             <img src="https://avatars.githubusercontent.com/u/1" alt="">
           </div>
-          <div class="user-list">
+          <div class="user-list py-12">
             <div class="item">
               <h2>@ 油腻_w4v0 ~</h2>
             </div>
@@ -110,7 +120,6 @@ onMounted(() => {
             <div class="item">
               只有懦弱和失败者才会四处寻找借口。
             </div>
-
             <div>
               <button class="button mr-8" @click="changeUser">
                 切换账户
@@ -159,33 +168,6 @@ onMounted(() => {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
-        .switch-main {
-          width: 300px;
-          display: flex;
-          flex-direction: column;
-          gap: 0;
-
-          div {
-            &:first-child {
-              input {
-                width: 100%;
-                height: 32px;
-                padding: 0 8px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                font-size: 12px;
-                outline: none;
-                transition: all 0.2s ease;
-
-                &:focus {
-                  border-color: var(--primary-color);
-                  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-                }
-              }
-            }
-          }
-        }
       }
 
       .switch-slide-3 {
@@ -239,67 +221,7 @@ onMounted(() => {
       width: 200px;
       height: 200px;
       flex-shrink: 0;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: relative;
-
-      .loading {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background-color: rgba(26, 26, 26, 0.964);
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .c1,
-      .c2,
-      .c3,
-      .c4,
-      .c5 {
-        width: 160px;
-        height: 160px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        z-index: 8;
-        // 向外扩散的动画效果
-        animation: pulse 2s infinite;
-      }
-
-      .c1 {
-        animation-delay: 0ms;
-        border: 1px solid rgba(135, 135, 135, 0.6);
-      }
-
-      .c2 {
-        animation-delay: 500ms;
-        border: 1px solid rgba(211, 3, 152, 0.83);
-      }
-
-      .c3 {
-        animation-delay: 1000ms;
-        border: 1px solid rgba(4, 104, 134, 0.6);
-      }
-
-      .c4 {
-        animation-delay: 1500ms;
-        border: 1px solid rgba(125, 199, 14, 0.6);
-      }
-
-      .c5 {
-        animation-delay: 2000ms;
-        border: 1px solid rgb(213, 30, 30, 0.6);
-      }
 
       img {
         width: 160px;
@@ -307,7 +229,6 @@ onMounted(() => {
         object-fit: cover;
         transition: all 0.16s ease;
         border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         position: relative;
       }
     }
@@ -318,7 +239,6 @@ onMounted(() => {
       flex: 1;
       display: inline-flex;
       flex-direction: column;
-      justify-content: center;
 
       .item {
         width: 100%;

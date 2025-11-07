@@ -10,10 +10,7 @@ import { fatal } from 'signale'
 import { runMigrations } from './db/db'
 
 import { addUser } from './module/user'
-import './module/feed'
-import './module/article'
-import './module/common'
-import './module/subscription'
+import './module'
 
 if (started) {
   app.quit()

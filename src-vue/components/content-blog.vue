@@ -100,13 +100,6 @@ onMounted(() => {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
   }
-
-  &>div {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-title-color);
-    line-height: 40px;
-  }
 }
 
 .blog {

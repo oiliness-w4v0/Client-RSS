@@ -17,7 +17,8 @@ function closePopup() {
   <div v-if="isOpen" class="popup-overlay" @click="closePopup" />
   <Transition name="slide-fade">
     <div v-if="isOpen" class="popup-wrapper">
-      <div class="popup-content" @click.stop>
+      <div class="popup-content rounded-lg shadow-lg overflow-hidden" @click.stop>
+        <div class="popup-content-mask absolute top-0 left-0 w-full h-full backdrop-blur-lg bg-gray-70/10 bg-opacity-10" />
         <!-- 渲染内容：根据 content 类型动态渲染 -->
         <component :is="content" v-if="isComponent" />
         <div v-else-if="typeof content === 'string'" v-html="content" />
@@ -29,7 +30,7 @@ function closePopup() {
   </Transition>
 </template>
 
-<style scoped>
+<style lang="less" scoped>
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -52,9 +53,11 @@ function closePopup() {
   pointer-events: none;
 }
 .popup-content {
+  // background-image: url('../../assets/th.jpg');
+  // background-size: cover;
+  // background-repeat: no-repeat;
   background-color: var(--sidebar-background-color);
   padding: 10px 20px 30px 20px;
-  border-radius: 8px;
   max-width: 600px;
   position: relative;
   pointer-events: initial;
