@@ -16,7 +16,7 @@
       'process.env.MAIL_HOST': JSON.stringify('smtp.163.com'),
       'process.env.MAIL_PORT': JSON.stringify(465),
       'process.env.MAIL_USER': JSON.stringify('18267094443@163.com'),
-      'process.env.MAIL_PASS': JSON.stringify('YFTv7Jkbzku7CNQu'),
+      'process.env.MAIL_PASS': JSON.stringify('YFTv7Jkbzku7CNQu'), // 网易邮箱授权码，不要用我的，自己去申请一下，很快的，因为是有限额的
       // 数据库
       'process.env.DATABASE_URL': JSON.stringify('super-work-001.db'),
     },
