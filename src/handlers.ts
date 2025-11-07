@@ -1,7 +1,9 @@
+import type { ProfileInfo } from './db/schema'
 import { ipcMain, nativeTheme, Notification } from 'electron'
 import { addSubscription, addUser, getAllArticles, getAllFeeds, getAllFeedsWithArticles, getAllUsers, getSubscriptionsByUserId, removeSubscription } from './db/query'
-import { parseRSSFeed } from './lib/rss-parser'
 
+import { updateProfileInfoByUserId } from './db/query/profileInfo'
+import { parseRSSFeed } from './lib/rss-parser'
 import { sendMail } from './mail'
 
 // IPC Handlers
@@ -133,6 +135,17 @@ ipcMain.handle('get-all-users', async () => {
 ipcMain.handle('add-user', async (event, user) => {
   try {
     const data = await addUser(user)
+    return { success: true, data }
+  }
+  catch (error) {
+    return { success: false, error: (error as Error).message }
+  }
+})
+
+// 更新用户的 ProfileInfo 信息
+ipcMain.handle('update-user-profile', async (event, userId: number, profile: Partial<ProfileInfo>) => {
+  try {
+    const data = await updateProfileInfoByUserId(userId, profile)
     return { success: true, data }
   }
   catch (error) {

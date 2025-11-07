@@ -1,13 +1,12 @@
 import type { Article, Feed, FeedWithArticles, ProfileInfo } from '../../src/db/schema'
 import { defineStore } from 'pinia'
+import { useCacheStore } from './cache'
 
 interface AppState {
-  sidebar: string
   feeds: Feed[]
   subscriptions: number[]
   feedsWithArticles: (FeedWithArticles & { show: false })[]
   articles: Article[]
-  currentArticle: Article | null
   // ProfileInfo
   profileInfo: ProfileInfo | null
 
@@ -18,12 +17,10 @@ interface AppState {
 
 export const useAppStore = defineStore('app', {
   state: (): AppState => ({
-    sidebar: 'moreSettings',
     feeds: [],
     subscriptions: [],
     feedsWithArticles: [],
     articles: [],
-    currentArticle: null,
 
     // profileInfo
     profileInfo: null,
@@ -32,6 +29,14 @@ export const useAppStore = defineStore('app', {
     feedDialogVisible: false,
     reloadDataVisible: false,
   }),
+  // getters: {
+  //   currentArticle: (state) => {
+  //     console.log('Getting current article from cache store', state)
+  //     const cacheStore = useCacheStore()
+  //     console.log('Getting current article from cache store', cacheStore.cache.articleId)
+  //     return state.articles.find(article => article.id === cacheStore.cache.articleId) || null
+  //   },
+  // },
   actions: {
     sendEmail(to: string, html: string) {
       return window.ipcRenderer.sendMail(to, html)
@@ -82,12 +87,10 @@ export const useAppStore = defineStore('app', {
         this.feedsWithArticles = (result.data || []).map(feed => ({ ...feed, show: false }))
       }
     },
-    setCurrentArticle(article: Article) {
-      this.currentArticle = article
-    },
-    toggleSidebar(view: string) {
-      this.sidebar = view
-    },
+    // setCurrentArticle(article: Article) {
+    // this.currentArticle = article
+    // },
+
     // 获取用户信息
     async getProfileInfoByUserId() {
       // const result = await window.ipcRenderer.getProfileInfoByUserId(userId)

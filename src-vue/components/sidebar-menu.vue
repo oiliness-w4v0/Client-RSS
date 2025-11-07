@@ -1,29 +1,30 @@
 <script setup lang="ts">
+import type { ArticleSelect } from '../../src/db/schema'
 import dayjs from 'dayjs'
 import { computed, ref } from 'vue'
 import { AiOutlineFolder, AiOutlineFolderOpen } from 'vue-icons-plus/ai'
 import FeedPopup from '@/components/popup/Feed.vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '../stores/app'
+import { useCacheStore } from '../stores/cache'
 
 const popupStore = usePopupStore()
-
 const appStore = useAppStore()
-const opens = ref<number>()
+const cacheStore = useCacheStore()
+const opens = computed(() => cacheStore.cache.feedId)
 const feedsWithArticles = computed(() => appStore.feedsWithArticles.filter(
   (feed) => {
     return appStore.subscriptions.includes(feed.id!)
   },
 ))
+const currentArticle = computed(() => cacheStore.cache.articleId)
 
 function openFeed(feedId: number) {
-  const has = opens.value === feedId
-  if (has) {
-    opens.value = undefined
-  }
-  else {
-    opens.value = feedId
-  }
+  cacheStore.setFeedId(feedId)
+}
+
+function toggleArticle(article: ArticleSelect) {
+  cacheStore.setArticleId(article.id)
 }
 
 function jumpToFeedView() {
@@ -49,9 +50,9 @@ function jumpToFeedView() {
           <li
             v-for="article in feed.articles"
             :key="article.id" :class="{
-              active: article.id === appStore.currentArticle?.id,
+              active: article.id === currentArticle,
             }"
-            @click="appStore.setCurrentArticle(article)"
+            @click="toggleArticle(article)"
           >
             <div class="title">
               {{ article.title }}

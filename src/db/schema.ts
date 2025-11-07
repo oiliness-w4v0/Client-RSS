@@ -37,9 +37,10 @@ export const subscriptions = sqliteTable(
 
 export const profileInfosTable = sqliteTable('profile_infos_table', {
   id: int().primaryKey({ autoIncrement: true }),
-  bio: text().notNull().default(''),
-  avatarUrl: text().notNull().default(''),
-  nativeTheme: text().notNull().default('light'),
+  userId: int().notNull().unique().references(() => usersTable.id),
+  feedId: int().notNull().default(0),
+  articleId: int().notNull().default(0),
+  sidebar: text().notNull().default('moreSettings'),
 })
 
 export const articlesTable = sqliteTable('articles_table', {
@@ -57,7 +58,7 @@ export const articlesTable = sqliteTable('articles_table', {
 export const usersRelations = relations(usersTable, ({ many, one }) => ({
   profileInfo: one(profileInfosTable, {
     fields: [usersTable.id],
-    references: [profileInfosTable.id],
+    references: [profileInfosTable.userId],
   }),
   feeds: many(feedsTable),
 }))
@@ -84,6 +85,7 @@ export type Article = typeof articlesTable.$inferInsert
 export type ArticleSelect = typeof articlesTable.$inferSelect
 export type User = typeof usersTable.$inferInsert
 export type UserSelect = typeof usersTable.$inferSelect
+export type UserWithProfileInfo = UserSelect & { profileInfo: ProfileInfoSelect | null }
 export type ProfileInfo = typeof profileInfosTable.$inferInsert
 export type ProfileInfoSelect = typeof profileInfosTable.$inferSelect
 export type Feed = typeof feedsTable.$inferInsert

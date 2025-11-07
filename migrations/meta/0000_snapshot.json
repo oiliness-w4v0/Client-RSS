@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "7ca09c75-6aae-4153-b9ef-715c13677c7a",
+  "id": "b39cfa2b-bb49-406e-ac71-8f1691f70033",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "articles_table": {
@@ -134,33 +134,62 @@
           "notNull": true,
           "autoincrement": true
         },
-        "bio": {
-          "name": "bio",
-          "type": "text",
+        "userId": {
+          "name": "userId",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "''"
+          "autoincrement": false
         },
-        "avatarUrl": {
-          "name": "avatarUrl",
-          "type": "text",
+        "feedId": {
+          "name": "feedId",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "''"
+          "default": 0
         },
-        "nativeTheme": {
-          "name": "nativeTheme",
+        "articleId": {
+          "name": "articleId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 0
+        },
+        "sidebar": {
+          "name": "sidebar",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'light'"
+          "default": "'moreSettings'"
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
+      "indexes": {
+        "profile_infos_table_userId_unique": {
+          "name": "profile_infos_table_userId_unique",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "profile_infos_table_userId_users_table_id_fk": {
+          "name": "profile_infos_table_userId_users_table_id_fk",
+          "tableFrom": "profile_infos_table",
+          "tableTo": "users_table",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -188,7 +217,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2025-11-06T14:18:56.204Z\"'"
+          "default": "'\"2025-11-07T04:11:34.874Z\"'"
         }
       },
       "indexes": {},
@@ -249,34 +278,13 @@
           "notNull": true,
           "autoincrement": false
         },
-        "username": {
-          "name": "username",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "nickname": {
-          "name": "nickname",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "passwordHash": {
-          "name": "passwordHash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
         "created_at": {
           "name": "created_at",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2025-11-06T14:18:56.203Z\"'"
+          "default": "'\"2025-11-07T04:11:34.873Z\"'"
         }
       },
       "indexes": {
@@ -284,20 +292,6 @@
           "name": "users_table_email_unique",
           "columns": [
             "email"
-          ],
-          "isUnique": true
-        },
-        "users_table_username_unique": {
-          "name": "users_table_username_unique",
-          "columns": [
-            "username"
-          ],
-          "isUnique": true
-        },
-        "users_table_nickname_unique": {
-          "name": "users_table_nickname_unique",
-          "columns": [
-            "nickname"
           ],
           "isUnique": true
         }

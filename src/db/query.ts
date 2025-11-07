@@ -8,10 +8,12 @@ import type {
   UserSelect,
 } from './schema'
 import { and, eq } from 'drizzle-orm'
+import { use } from 'react'
 import { db } from './db'
 import {
   articlesTable,
   feedsTable,
+  profileInfosTable,
   subscriptions,
   usersTable,
 } from './schema'
@@ -20,14 +22,45 @@ import {
 
 // 新增用户
 export async function addUser(user: User): Promise<UserSelect[]> {
-  return await db.insert(usersTable).values(user).onConflictDoNothing({
+  // 添加用户的时候，也要添加用户的 profileInfo
+  const result = await db.insert(usersTable).values(user).onConflictDoNothing({
+    target: usersTable.email,
+  }).onConflictDoNothing({
     target: usersTable.email,
   }).returning()
+
+  const userId = result[0]?.id
+  if (userId) {
+    await db.insert(profileInfosTable).values({
+      userId,
+      feedId: 0,
+      articleId: 0,
+      sidebar: 'moreSettings',
+    })
+  }
+
+  return result
 }
 
 // 获取所有用户
-export async function getAllUsers(): Promise<User[]> {
-  return await db.select().from(usersTable)
+export async function getAllUsers(): Promise<any[]> {
+  return await db.query.usersTable.findMany({
+    with: {
+      profileInfo: true,
+    },
+  })
+  // try {
+  //   const userSubscriptions = await db
+  //     .select()
+  //     .from(usersTable)
+  //     .fullJoin(subscriptions, eq(usersTable.id, subscriptions.userId))
+
+  //   return userSubscriptions
+  // }
+  // catch (error) {
+  //   console.error('Error fetching users:', error)
+  //   return []
+  // }
 }
 
 // 根据ID获取用户
@@ -43,11 +76,21 @@ export async function updateUser(id: number, user: Partial<User>): Promise<void>
 // addTestUser()
 // 添加测试用户，如果已存在则忽略
 export async function addTestUser(): Promise<void> {
-  await db.insert(usersTable).values({
-    email: 'test@example.com',
-  }).onConflictDoNothing({
-    target: usersTable.email,
+  // 查询数据库有无用户数据，没有则新增一条用户信息
+  const existingUsers = await db.select().from(usersTable)
+  if (existingUsers.length > 0) {
+    return
+  }
+
+  await addUser({
+    email: '18267094443@163.com',
   })
+
+  // await db.insert(usersTable).values({
+  //   email: 'test@example.com',
+  // }).onConflictDoNothing({
+  //   target: usersTable.email,
+  // })
 
   // db.insert(subscriptions).values({
   //   userId: 1,
@@ -69,6 +112,8 @@ export async function addTestUser(): Promise<void> {
   //   feedIds: '3,4,6',
   // })
 }
+
+addTestUser()
 
 // ========= Feeds functions ==========
 export async function getAllFeeds(): Promise<FeedSelect[]> {

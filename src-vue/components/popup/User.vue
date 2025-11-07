@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { User, UserSelect } from '../../../src/db/schema'
+import type { User, UserSelect, UserWithFeeds, UserWithProfileInfo } from '../../../src/db/schema'
 import { computed, onMounted, ref } from 'vue'
 import { AiOutlineLoading } from 'vue-icons-plus/ai'
 import { useUserStore } from '@/stores/user'
@@ -33,8 +33,7 @@ function changeUser() {
   // 切换账户逻辑
 }
 
-function selectUser(user: UserSelect) {
-  console.log('选择用户', user)
+function selectUser(user: UserWithProfileInfo) {
   userStore.setCurrentUser(user)
   status.value = 'status-2'
   // 选择账户逻辑
@@ -54,7 +53,11 @@ const statusIndex = computed(() => {
 })
 
 onMounted(() => {
-  userStore.getUsers()
+  // userStore.getUsers().then(() => {
+  // if (userStore.user) {
+  //   status.value = 'status-2'
+  // }
+  // })
 })
 </script>
 

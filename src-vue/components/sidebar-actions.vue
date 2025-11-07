@@ -4,10 +4,12 @@ import { AiOutlineExperiment, AiOutlineLoading, AiOutlineMoon, AiOutlineOrderedL
 import FeedPopup from '@/components/popup/Feed.vue'
 import Popup from '@/components/ui/Popup.vue'
 import { useAppStore } from '@/stores/app'
+import { useCacheStore } from '@/stores/cache'
 import { usePopupStore } from '@/stores/popup'
 
 const popupStore = usePopupStore()
 const appStore = useAppStore()
+const cacheStore = useCacheStore()
 const isDarkMode = ref(true) // This should be replaced with a method to get the current theme
 
 onMounted(async () => {
@@ -27,10 +29,10 @@ const operationButtons = ref([
     key: 'feed',
     tooltip: '设置订阅源',
     click: () => {
-      const pre = appStore.sidebar
-      appStore.toggleSidebar('feed')
+      const pre = cacheStore.cache.sidebar
+      cacheStore.setSidebar('feed')
       popupStore.openPopup(FeedPopup, () => {
-        appStore.toggleSidebar(pre)
+        cacheStore.setSidebar(pre)
       })
     },
   },
@@ -58,7 +60,7 @@ const operationButtons = ref([
     key: 'articleList',
     tooltip: '文章列表',
     click: () => {
-      appStore.toggleSidebar('articleList')
+      cacheStore.setSidebar('articleList')
     },
   },
   {
@@ -66,14 +68,14 @@ const operationButtons = ref([
     key: 'moreSettings',
     tooltip: '更多设置',
     click: () => {
-      appStore.toggleSidebar('moreSettings')
+      cacheStore.setSidebar('moreSettings')
     },
   },
 ])
 
 const switchIndex = computed(() => {
   const keys = operationButtons.value.map(op => op.key)
-  return keys.indexOf(appStore.sidebar)
+  return keys.indexOf(cacheStore.cache.sidebar)
 })
 </script>
 
@@ -93,7 +95,7 @@ const switchIndex = computed(() => {
 
       <span
         v-for="operation in operationButtons" :key="operation.key" class="icons" :class="{
-          active: appStore.sidebar === operation.key,
+          active: cacheStore.cache.sidebar === operation.key,
           ...operation.class,
         }" @click="operation.click"
       >

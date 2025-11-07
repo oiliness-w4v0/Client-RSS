@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import dayjs from 'dayjs'
 import { computed, onMounted, ref } from 'vue'
+import { useCacheStore } from '@/stores/cache'
 import { emitter } from '../emitter'
 import { useAppStore } from '../stores/app'
 import { useImgStore } from '../stores/img'
@@ -10,8 +11,12 @@ import DialogEmail from './popup/Email.vue'
 const popupStore = usePopupStore()
 const imgStore = useImgStore()
 const appStore = useAppStore()
+const cacheStore = useCacheStore()
+const articles = computed(() => {
+  return appStore.feedsWithArticles.find(feed => feed.id === cacheStore.cache.feedId)?.articles || []
+})
 const blog = computed(() => {
-  return appStore.currentArticle
+  return articles.value.find(article => article.id === cacheStore.cache.articleId) || null
 })
 const blogContentRef = ref<HTMLDivElement | null>(null)
 

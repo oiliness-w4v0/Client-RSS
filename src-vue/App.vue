@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Component } from 'vue'
 import { computed, onMounted } from 'vue'
 import ContentBlog from './components/content-blog.vue'
 import ContentHeader from './components/content-header.vue'
@@ -7,23 +8,25 @@ import ImageShow from './components/ImageShow.vue'
 import SidebarActions from './components/sidebar-actions.vue'
 import SidebarMenu from './components/sidebar-menu.vue'
 import { useAppStore } from './stores/app'
+import { useCacheStore } from './stores/cache'
+import { useUserStore } from './stores/user'
 
 const appStore = useAppStore()
+const cacheStore = useCacheStore()
+const userStore = useUserStore()
+
+const components: Record<string, Component> = {
+  articleList: SidebarMenu,
+  moreSettings: Drawer,
+}
 
 const Sidebar = computed(() => {
-  if (appStore.sidebar === 'articleList') {
-    return SidebarMenu
-  }
-
-  if (appStore.sidebar === 'moreSettings') {
-    return Drawer
-  }
-
-  return SidebarMenu
+  return components[cacheStore.cache.sidebar] || SidebarMenu
 })
 
 onMounted(() => {
   appStore.init()
+  userStore.getUsers(true)
 })
 </script>
 

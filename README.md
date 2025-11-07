@@ -1,6 +1,13 @@
-# electron-forge-template
+# 客户端 rss 阅读器
 
 这是一个使用 Electron Forge 创建 Electron 应用程序的现代化模板存储库。它集成了 Bun 作为构建工具，提供了快速的开发体验和优化的项目结构。
+
+## 主要框架
+
+- [Electron Forge](https://www.electronforge.io/)：用于简化 Electron 应用的开发和打包流程。
+- [Bun](https://bun.sh/)：用于快速构建 TypeScript 代码
+- [drizzle orm](https://orm.drizzle.team/)：用于数据库操作的 TypeScript ORM
+- [libSqlite](https://www.sqlite.org/index.html)：用于嵌入式数据库的 C 语言库
 
 ## ✨ 特性
 

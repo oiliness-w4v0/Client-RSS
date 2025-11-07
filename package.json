@@ -29,7 +29,8 @@
   "dependencies": {
     "@electron-forge/publisher-github": "^7.10.2",
     "@libsql/client": "^0.15.15",
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",

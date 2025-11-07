@@ -1,6 +1,7 @@
-import type { User, UserSelect } from '../../src/db/schema'
+import type { User, UserSelect, UserWithProfileInfo } from '../../src/db/schema'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useCacheStore } from '@/stores/cache'
 
 export const useUserStore = defineStore('user', () => {
   const users = ref<UserSelect[]>([])
@@ -27,17 +28,23 @@ export const useUserStore = defineStore('user', () => {
    * 获取用户列表
    * @returns {void}
    */
-  function getUsers(): void {
-    window.ipcRenderer.getAllUsers().then((response) => {
-      if (response.success && response.data) {
-        users.value = response.data
-        return response.data
+  async function getUsers(init?: boolean): Promise<void> {
+    const { success, data } = await window.ipcRenderer.getAllUsers()
+    const cacheStore = useCacheStore()
+    if (success && data) {
+      console.log('获取用户列表成功', data)
+      users.value = data
+
+      const user = data[0]
+      if (user) {
+        console.log('设置当前用户为列表中的第一个用户', user)
+        setCurrentUser(user)
+        if (init) {
+          console.log('初始化缓存中的侧边栏设置', user?.profileInfo?.sidebar)
+          cacheStore.setSidebar(user?.profileInfo?.sidebar || 'articleList')
+        }
       }
-      else {
-        console.error('Failed to fetch users:', response.error)
-        return []
-      }
-    })
+    }
   }
 
   /**
@@ -45,8 +52,15 @@ export const useUserStore = defineStore('user', () => {
    * @param {UserSelect} selectedUser - 选择的用户对象
    * @returns {void}
    */
-  function setCurrentUser(selectedUser: UserSelect): void {
+  function setCurrentUser(selectedUser: UserWithProfileInfo): void {
     user.value = selectedUser
+    // console.log('设置当前用户', selectedUser.profileInfo)
+    if (selectedUser.profileInfo) {
+      const cacheStore = useCacheStore()
+      cacheStore.setSidebar(selectedUser.profileInfo.sidebar)
+      cacheStore.setFeedId(selectedUser.profileInfo.feedId)
+      cacheStore.setArticleId(selectedUser.profileInfo.articleId)
+    }
   }
 
   return {

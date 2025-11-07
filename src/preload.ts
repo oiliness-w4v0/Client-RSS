@@ -1,4 +1,4 @@
-import type { User } from './db/schema'
+import type { ProfileInfo, User } from './db/schema'
 import { contextBridge, ipcRenderer } from 'electron'
 
 export type IpcRendererAPI = typeof api
@@ -18,6 +18,7 @@ const api = {
   getAllUsers: () => ipcRenderer.invoke('get-all-users'),
   addUser: (user: User) => ipcRenderer.invoke('add-user', user),
   onUpdateCounter: (callback: (value: number) => void) => ipcRenderer.on('update-counter', (_event, value) => callback(value)),
+  updateProfileInfoByUserId: (userId: number, profile: Partial<ProfileInfo>) => ipcRenderer.invoke('update-user-profile', userId, profile),
 }
 
 contextBridge.exposeInMainWorld('ipcRenderer', api)

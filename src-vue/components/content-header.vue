@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useCacheStore } from '@/stores/cache'
 import { emitter } from '../emitter'
 import { useAppStore } from '../stores/app'
 
+const cacheStore = useCacheStore()
 const appStore = useAppStore()
 const blog = computed(() => {
-  return appStore.currentArticle
+  return appStore.articles.find(article => article.id === cacheStore.cache.articleId) || null
 })
 const isTitleVisible = ref(false)
 

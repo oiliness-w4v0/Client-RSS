@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import type { Article, Feed, FeedSelect, FeedWithArticles, User, UserSelect } from '../src/db/schema'
+import type { Article, Feed, FeedSelect, FeedWithArticles, ProfileInfo, User, UserWithProfileInfo } from '../src/db/schema'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -20,8 +20,9 @@ declare global {
       getSubscriptionsByUserId: (userId: number) => Promise<{ success: boolean, data?: FeedSelect[], error?: string }>
       addSubscription: (userId: number, feedId: number) => Promise<{ success: boolean, error?: string }>
       removeSubscription: (userId: number, feedId: number) => Promise<{ success: boolean, error?: string }>
-      getAllUsers: () => Promise<{ success: boolean, data: UserSelect[], error?: string }>
+      getAllUsers: () => Promise<{ success: boolean, data: UserWithProfileInfo[], error?: string }>
       addUser: (user: User) => Promise<{ success: boolean, error?: string }>
+      updateProfileInfoByUserId: (userId: number, profile: Partial<ProfileInfo>) => Promise<{ success: boolean, data?: ProfileInfo, error?: string }>
 
       // 主进程发送过来的更新计数器消息
       onUpdateCounter: (callback: (value: number) => void) => void
