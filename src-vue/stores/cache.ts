@@ -9,17 +9,23 @@ import { useUserStore } from '@/stores/user'
 import { RUN } from '~/lib/constant'
 
 interface CacheState {
-  sidebar: string
+  sidebar: string | undefined
   feedId: number | undefined
   articleId: number | undefined
+  theme: 'light' | 'dark' | 'system'
+  glass: boolean
+  bgImage: string
 }
 
 export const useCacheStore = defineStore('app-cache', () => {
   // 缓存数据
   const cache = reactive<CacheState>({
-    sidebar: 'moreSettings',
+    sidebar: undefined,
     feedId: undefined,
     articleId: undefined,
+    theme: 'system',
+    glass: false,
+    bgImage: 'https://cn.bing.com/th?id=OHR.TempleE_ZH-CN9455488333_UHD.jpg&pid=hp&w=2000',
   })
 
   function setSidebar(sidebar: string) {
@@ -34,6 +40,19 @@ export const useCacheStore = defineStore('app-cache', () => {
     cache.articleId = articleId
   }
 
+  function setTheme(theme?: 'light' | 'dark' | 'system') {
+    cache.theme = theme || (cache.theme === 'light' ? 'dark' : 'light')
+    ipcRenderer.invoke(RUN.SET_NATIVE_THEME, cache.theme)
+  }
+
+  function setGlass(glass: boolean) {
+    cache.glass = glass
+  }
+
+  function setBgImage(bgImage: string) {
+    cache.bgImage = bgImage
+  }
+
   watch(
     cache,
     (newVal) => {
@@ -44,16 +63,13 @@ export const useCacheStore = defineStore('app-cache', () => {
     },
   )
 
-  // 更新缓存
-  function updateCache() {
-
-  }
-
   return {
     cache,
-    updateCache,
     setSidebar,
     setFeedId,
     setArticleId,
+    setTheme,
+    setGlass,
+    setBgImage,
   }
 })

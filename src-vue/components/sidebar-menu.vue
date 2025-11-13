@@ -6,11 +6,13 @@ import {
   AiOutlineFolder,
   AiOutlineFolderOpen,
 } from 'vue-icons-plus/ai'
+import { useRouter } from 'vue-router'
 import FeedPopup from '@/components/popup/Feed.vue'
 import { usePopupStore } from '@/stores/popup'
 import { useAppStore } from '../stores/app'
 import { useCacheStore } from '../stores/cache'
 
+const router = useRouter()
 const popupStore = usePopupStore()
 const appStore = useAppStore()
 const cacheStore = useCacheStore()
@@ -27,6 +29,10 @@ function openFeed(feedId: number) {
 }
 
 function toggleArticle(article: ArticleSelect) {
+  router.push({
+    name: 'Article',
+    params: { id: article.id },
+  })
   cacheStore.setArticleId(article.id)
 }
 
@@ -49,7 +55,12 @@ function jumpToFeedView() {
         <span>{{ feed.title }}</span>
       </div>
       <Transition name="slide-fade" mode="out-in">
-        <ul v-show="opens === feed.id!">
+        <ul
+          v-show="opens === feed.id!"
+          :class="{
+            backdrop: appStore.glass,
+          }"
+        >
           <li
             v-for="article in feed.articles"
             :key="article.id" :class="{
@@ -107,7 +118,6 @@ function jumpToFeedView() {
       align-items: center;
       cursor: pointer;
       z-index: 5;
-      background-color: var(--sidebar-background-color);
     }
 
     ul {
@@ -139,6 +149,13 @@ function jumpToFeedView() {
 ul {
   margin: 0;
   list-style: none;
+  &.backdrop {
+    li {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
 
   li {
     padding: 10px 20px;
@@ -146,7 +163,7 @@ ul {
 
     &.active {
       background-color: var(--menu-active-background-color) !important;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 10px 0 10px rgba(0, 0, 0, 0.6);
 
       .title {
         color: var(--text-title-color);

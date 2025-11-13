@@ -14,6 +14,8 @@ export const usersTable = sqliteTable('users_table', {
   feedId: int().notNull().default(0),
   articleId: int().notNull().default(0),
   sidebar: text().notNull().default('moreSettings'),
+  theme: text().notNull().default('system'),
+  last_path: text().notNull().default('/'),
 })
 
 // RSS 源表

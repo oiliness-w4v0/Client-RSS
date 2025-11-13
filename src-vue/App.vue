@@ -4,11 +4,12 @@ import {
   computed,
   onMounted,
 } from 'vue'
-import ContentBlog from './components/content-blog.vue'
-import Drawer from './components/Drawer.vue'
 import ImageShow from './components/ImageShow.vue'
+import Settings from './components/Settings.vue'
 import SidebarActions from './components/sidebar-actions.vue'
 import SidebarMenu from './components/sidebar-menu.vue'
+import Tabs from './components/Tabs.vue'
+
 import { useAppStore } from './stores/app'
 import { useCacheStore } from './stores/cache'
 import { useUserStore } from './stores/user'
@@ -19,11 +20,11 @@ const userStore = useUserStore()
 
 const components: Record<string, Component> = {
   articleList: SidebarMenu,
-  moreSettings: Drawer,
+  moreSettings: Settings,
 }
 
 const Sidebar = computed(() => {
-  return components[cacheStore.cache.sidebar] || SidebarMenu
+  return components[cacheStore.cache.sidebar!] || SidebarMenu
 })
 
 onMounted(() => {
@@ -33,16 +34,34 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="layout">
+  <div
+    class="layout"
+    :class="{
+      backdrop: cacheStore.cache.glass,
+    }"
+  >
+    <div v-if="cacheStore.cache.glass" class="absolute w-full h-full">
+      <img class="w-full h-full object-cover" :src="cacheStore.cache.bgImage" alt="">
+    </div>
+    <div class="backdrop-blur-lg bg-gray-50/10 absolute w-full h-full" />
+    <div
+      class="app-masker-2 transition-all bg-transparent absolute w-full h-full"
+    />
     <ImageShow />
     <div class="sidebar">
       <SidebarActions />
-      <Transition name="slide-fade" mode="out-in">
+
+      <Tabs />
+
+      <Transition name="switch-app-menu" mode="out-in">
         <component :is="Sidebar" />
       </Transition>
     </div>
     <div class="content">
-      <ContentBlog />
+      <KeepAlive>
+        <RouterView />
+      </KeepAlive>
+      <!-- <ContentBlog /> -->
     </div>
   </div>
 </template>
@@ -51,6 +70,19 @@ onMounted(() => {
 .layout {
   display: flex;
   height: 100vh;
+  &.backdrop {
+    .app-masker-2 {
+      &.deep {
+        background-color: rgba(0, 0, 0, 0.335);
+      }
+    }
+    .sidebar {
+      background-color: transparent;
+    }
+    .content {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
 
   .sidebar {
     width: var(--sidebar-width);
@@ -60,8 +92,9 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     padding-bottom: 25px;
+    position: relative;
+    z-index: 2;
   }
-
   .content {
     flex: 1;
     padding: 0 0 20px 0;
@@ -69,20 +102,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    position: relative;
   }
-}
-.slide-fade-enter-active {
-  transition: all 0.15s ease-out;
-}
-.slide-fade-leave-active {
-  transition: all 0.15s ease-in;
-}
-.slide-fade-enter-from {
-    opacity: 0;
-    transform: translateX(-100%);
-}
-.slide-fade-leave-to {
-    opacity: 0;
-    transform: translateX(-100%);
 }
 </style>

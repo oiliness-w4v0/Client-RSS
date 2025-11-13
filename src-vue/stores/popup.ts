@@ -1,6 +1,9 @@
 import type { Component } from 'vue'
 import { defineStore } from 'pinia'
-import { ref, shallowRef } from 'vue'
+import {
+  ref,
+  shallowRef,
+} from 'vue'
 
 export const usePopupStore = defineStore('popup', () => {
   const isOpen = ref(false) // 是否打开

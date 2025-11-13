@@ -5,6 +5,7 @@ import {
   addArticle,
   addArticles,
   getAllArticles,
+  getArticleById,
   getArticlesByFeedId,
 } from './article.service'
 
@@ -13,6 +14,13 @@ import {
  */
 ipcMain.handle(RUN.GET_ALL_ARTICLES, async () => {
   return await getAllArticles()
+})
+
+/**
+ * 根据 ID 获取文章
+ */
+ipcMain.handle(RUN.GET_ARTICLE_BY_ID, async (event, id: number) => {
+  return await getArticleById(id)
 })
 
 /**

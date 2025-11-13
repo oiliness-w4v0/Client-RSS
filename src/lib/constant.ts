@@ -47,6 +47,10 @@ export enum RUN {
    */
   GET_ALL_ARTICLES = 'get-all-articles',
   /**
+   * 根据 ID 获取文章
+   */
+  GET_ARTICLE_BY_ID = 'get-article-by-id',
+  /**
    * 根据订阅 ID 获取文章列表
    */
   GET_ARTICLES_BY_FEED_ID = 'get-articles-by-feed-id',

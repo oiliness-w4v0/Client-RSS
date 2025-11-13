@@ -18,7 +18,7 @@ function closePopup() {
   <Transition name="slide-fade">
     <div v-if="isOpen" class="popup-wrapper">
       <div class="popup-content rounded-lg shadow-lg overflow-hidden" @click.stop>
-        <div class="popup-content-mask absolute top-0 left-0 w-full h-full backdrop-blur-lg bg-gray-70/10 bg-opacity-10" />
+        <!-- <div class="popup-content-mask absolute top-0 left-0 w-full h-full backdrop-blur-lg bg-gray-70/10 bg-opacity-10" /> -->
         <!-- 渲染内容：根据 content 类型动态渲染 -->
         <component :is="content" v-if="isComponent" />
         <div v-else-if="typeof content === 'string'" v-html="content" />
@@ -37,7 +37,7 @@ function closePopup() {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 999;
 }
 .popup-wrapper {
@@ -53,14 +53,21 @@ function closePopup() {
   pointer-events: none;
 }
 .popup-content {
-  // background-image: url('../../assets/th.jpg');
-  // background-size: cover;
-  // background-repeat: no-repeat;
-  background-color: var(--sidebar-background-color);
   padding: 10px 20px 30px 20px;
   max-width: 600px;
   position: relative;
   pointer-events: initial;
+  background: var(--content-background-color);
+  border: 2px solid transparent;
+  padding: 32px 24px;
+  font-size: 14px;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 .slide-fade-enter-active {
   transition: all 0.15s ease-out;

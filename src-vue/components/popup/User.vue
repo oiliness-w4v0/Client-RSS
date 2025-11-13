@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import type {
-  User,
-  UserSelect,
-  UserWithFeeds,
-  UserWithProfileInfo,
-} from '../../../src/db/schema'
 import {
   computed,
   onMounted,
@@ -40,7 +34,7 @@ function changeUser() {
   // 切换账户逻辑
 }
 
-function selectUser(user: UserWithProfileInfo) {
+function selectUser(user: any) {
   userStore.setCurrentUser(user)
   status.value = 'status-2'
   // 选择账户逻辑
@@ -60,9 +54,9 @@ const statusIndex = computed(() => {
 })
 
 onMounted(() => {
-  if (userStore.user) {
-    status.value = 'status-2'
-  }
+  // if (userStore.user) {
+  //   status.value = 'status-2'
+  // }
   // userStore.getUsers().then(() => {
   // if (userStore.user) {
   //   status.value = 'status-2'

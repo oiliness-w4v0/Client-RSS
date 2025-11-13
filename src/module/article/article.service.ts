@@ -13,6 +13,17 @@ export async function getAllArticles(): Promise<ArticleSelect[]> {
     .from(articlesTable)
 }
 
+// 根据 ID 获取文章
+export async function getArticleById(id: number): Promise<ArticleSelect | null> {
+  const article = await db
+    .select()
+    .from(articlesTable)
+    .where(eq(articlesTable.id, id))
+    .limit(1)
+  console.log('查询文章', id, article)
+  return article.length > 0 ? article[0] : null
+}
+
 // 根据订阅 ID 获取文章列表
 export async function getArticlesByFeedId(feedId: number): Promise<ArticleSelect[]> {
   return await db

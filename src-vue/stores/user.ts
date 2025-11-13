@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', () => {
    * @returns {void}
    */
   async function getUsers(init?: boolean): Promise<void> {
-    const data = await ipcRenderer.invoke(RUN.GET_ALL_USERS)
+    const data = await ipcRenderer.invoke(RUN.GET_ALL_USERS) as UserSelect[]
     const cacheStore = useCacheStore()
     if (data) {
       users.value = data
@@ -32,7 +32,10 @@ export const useUserStore = defineStore('user', () => {
       if (user) {
         setCurrentUser(user)
         if (init) {
-          cacheStore.setSidebar(user?.profileInfo?.sidebar || 'articleList')
+          cacheStore.setSidebar(user.sidebar)
+          cacheStore.setFeedId(user.feedId)
+          cacheStore.setArticleId(user.articleId)
+          cacheStore.setTheme(user.theme as 'light' | 'dark' | 'system')
         }
       }
     }
@@ -45,10 +48,6 @@ export const useUserStore = defineStore('user', () => {
    */
   function setCurrentUser(selectedUser: UserSelect): void {
     user.value = selectedUser
-    const cacheStore = useCacheStore()
-    cacheStore.setSidebar(selectedUser.sidebar)
-    cacheStore.setFeedId(selectedUser.feedId)
-    cacheStore.setArticleId(selectedUser.articleId)
   }
 
   return {

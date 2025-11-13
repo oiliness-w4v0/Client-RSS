@@ -8,6 +8,7 @@ import { sendMail } from './common.service'
 
 // 设置原生主题
 ipcMain.handle(RUN.SET_NATIVE_THEME, async (event, theme: 'dark' | 'light') => {
+  console.log('设置主题为：', theme)
   nativeTheme.themeSource = theme
 })
 

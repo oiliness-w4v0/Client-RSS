@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ecb544ae-dacf-4a20-aed9-f36acbdb6157",
+  "id": "57501770-8bee-46b5-9691-4c7295454166",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "articles_table": {
@@ -147,7 +147,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2025-11-07T08:53:00.945Z\"'"
+          "default": "'\"2025-11-08T22:33:04.521Z\"'"
         }
       },
       "indexes": {},
@@ -214,7 +214,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "default": "'\"2025-11-07T08:53:00.945Z\"'"
+          "default": "'\"2025-11-08T22:33:04.521Z\"'"
         },
         "feedId": {
           "name": "feedId",
@@ -239,6 +239,22 @@
           "notNull": true,
           "autoincrement": false,
           "default": "'moreSettings'"
+        },
+        "theme": {
+          "name": "theme",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'system'"
+        },
+        "last_path": {
+          "name": "last_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'/'"
         }
       },
       "indexes": {

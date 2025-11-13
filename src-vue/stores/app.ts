@@ -39,7 +39,6 @@ export const useAppStore = defineStore('app', {
     init() {
       this.getAllFeedsWithArticles()
       this.getSubscriptionsByUserId(1)
-      this.listenUpdateCounter()
     },
     // 获取当前用户的订阅列表
     async getSubscriptionsByUserId(userId: number) {
@@ -72,20 +71,6 @@ export const useAppStore = defineStore('app', {
         ...feed,
         show: false,
       }))
-    },
-
-    // 获取用户信息
-    async getProfileInfoByUserId() {
-
-    },
-    listenUpdateCounter() {
-      // ipcRenderer.on('onUpdateCounter', (_event, value: number) => {
-      //   this.reloadDataVisible = true
-      //   const count = setTimeout(() => {
-      //     this.reloadDataVisible = false
-      //     clearTimeout(count)
-      //   }, 3000)
-      // })
     },
   },
 })
